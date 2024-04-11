@@ -1,0 +1,89 @@
+.HomePage {
+    height: 100vh; 
+    width: 100vw;
+ 
+}
+
+.navigacija {
+    align-items: center;
+    display: flex;
+    height: 20%; 
+}
+
+.NavButtons button.active {
+    background-color: lightblue; /* Set the background color for the active button */
+  }
+
+.logoContainer {
+    display: flex;
+    align-items: center;
+    margin-left: 2%;
+}
+
+.ProfileNav {
+    background-color: aquamarine;
+    display: flex;
+    margin-left: auto;
+    justify-content: space-around;
+    padding: 5px;
+    border-radius: 50px;
+    width: 9%;
+    margin-top: 1%;
+    margin-right: 1%;
+}
+
+.ProfilePicture {
+   height: 60px;  
+   width: 60px;
+   cursor: pointer;
+
+}
+.ProfileEditBtn {
+    background-color: rgb(244, 255, 39); 
+    border-radius: 50%;
+    height: 60px;  
+   width: 60px;
+}
+
+
+.HelloUserText{
+    margin-left: 3%;
+}
+
+.ContentOptions {
+    display: flex;
+    justify-content: center;
+}
+
+.ContentOptions button.active {
+    background-color: lightblue; /* Set the background color for the active button */
+  }
+
+.MyAuctions {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+.Bidding {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+.Won {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+
+.footer {
+  width: 100%;
+  background-color: #f0f0f0; 
+  text-align: center;
+  padding: 10px 0; 
+  position: fixed;  
+  bottom: 0;
+}
+
+
+/*///////////////////////////////////////*/
+

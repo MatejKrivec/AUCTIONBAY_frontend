@@ -1,0 +1,77 @@
+.introPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100vh; 
+  width: 100vw; 
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoContainer {
+  margin-right: auto; 
+  margin: 5px;
+}
+
+.logo {
+  width: 70px; /* Set the width of the image */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.visual {
+  margin-top: 20px; 
+}
+
+.visualRepresentation {
+  max-height: 400px;
+  width: auto;
+}
+
+.authOptions {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin: 5px;
+}
+
+.loginButton, .signupButton {
+  margin-left: 10px; 
+  margin-right: 10px;
+}
+
+.loginButton:hover, .signupButton:hover {
+  background-color: rgb(73, 73, 73); /* Change background color on hover */
+  color: #f0f0f0;
+}
+
+.mainContent {
+  margin-top: 20px; 
+}
+
+.startBiddingButton {
+  background-color: rgb(244, 255, 39);
+}
+
+.paragraph {
+  margin-top: 25%;
+}
+
+
+
+
+.footer {
+  width: 100%;
+  background-color: #f0f0f0; 
+  text-align: center;
+  padding: 10px 0; 
+  position: fixed;  
+  bottom: 0;
+}
+
+

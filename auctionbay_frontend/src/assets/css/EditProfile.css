@@ -1,0 +1,353 @@
+/* ProfilePage.css */
+/*
+.edit-profile-page {
+  display: flex;
+  height: 100vh;
+}
+
+.menu {
+  background-color: #f0f0f0;
+  padding: 30px;
+  width: 300px;
+  border-right: 1px solid #ddd; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+}
+
+.back-button {
+  margin-bottom: 20px;
+  cursor: pointer;
+  color: #007bff; 
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+}
+
+.option {
+  padding: 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd; 
+  transition: background-color 0.3s ease; 
+}
+
+.option:last-child {
+  border-bottom: none; 
+}
+
+.option:hover {
+  background-color: #e0e0e0; 
+}
+
+.option.active {
+  background-color: #007bff; 
+  color: white; 
+}
+
+.content {
+  flex: 2;
+  padding: 30px;
+}
+
+.back-button {
+  margin-bottom: 20px;
+  cursor: pointer;
+  color: black; 
+  font-size: 25px; 
+}
+*/
+
+/* ProfileSettings.css */
+
+.profile-settings-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-settings-window {
+  background-color: white;
+  border: 2px solid #ccc;
+  padding: 20px;
+  width: 400px; /* Adjust width as needed */
+  height: 400px;
+  border-radius: 20px;
+}
+
+.profile-settings {
+    padding: 20px;
+  }
+
+  
+  .profile-settings h2 {
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 10px;
+    margin-right: 25px;
+    border-radius: 20px;
+  }
+
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 0%;
+  }
+
+  #firstName, #lastName, #email {
+    border-radius: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  input[type="email"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+
+  .linksContainer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .changePassword {
+    margin-bottom: 5px;
+  }
+
+  .changePassword, .changeProfilePic {
+    color: black;
+    cursor: pointer;
+  }
+  
+  .button-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: end;
+    
+  }
+  
+  .save-button {
+    background-color: rgb(244, 255, 39);
+    border-radius: 20px;
+  }
+  .cancel-button {
+    margin-right: 2%;
+    background-color: gainsboro;
+    border-radius: 20px;
+  }
+  
+  .save-button:hover {
+    background-color: rgb(224, 235, 20); /* Adjust hover color as needed */
+  }
+  
+  .cancel-button:hover {
+    background-color: gray; /* Adjust hover color as needed */
+  }
+  
+  
+
+/* ChangePassword.css */
+
+.change-password-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.change-password-window {
+  background-color: white;
+  border: 2px solid #ccc;
+  padding: 20px;
+  width: 400px; 
+  height: 400px;
+  border-radius: 20px;
+}
+
+.password-settings {
+  padding: 20px;
+}
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+  }
+  
+  .save-password-button {
+    background-color: rgb(244, 255, 39);
+    border-radius: 20px;
+  }
+  .cancel-password-button {
+    border-radius: 20px;
+    background-color: gainsboro;
+    margin-right: 2%;
+  }
+  
+  .save-password-button:hover {
+    background-color: rgb(224, 235, 20); /* Adjust hover color as needed */
+  }
+  
+  .cancel-password-button:hover {
+    background-color: gray; /* Adjust hover color as needed */
+  }
+  
+  
+  
+
+  /* ChangeProfilePicture.css */
+
+  .change-profile-picture-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .change-profile-picture-window {
+    background-color: white;
+    border: 2px solid #ccc;
+    padding: 20px;
+    width: 450px; 
+    height: 280px;
+    border-radius: 20px;
+  }
+
+.change-profile-picture {
+    padding: 0px;
+  }
+  
+  .change-profile-picture h2 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .UploadPicContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+  }
+  
+  .UploadPictureBtn{
+    border: 2px solid black;
+    border-radius: 20px;
+  }
+
+  .UploadPictureBtn:hover {
+    background-color: gainsboro; /* Adjust hover color as needed */
+  }
+  
+
+  .ProfilePic {
+    max-width: 20%; 
+    max-height: 20%; 
+    margin-bottom: 15px;
+}
+  
+  .save-picture-button {
+    background-color: rgb(244, 255, 39);
+    border-radius: 20px;
+  }
+  .cancel-picture-button {
+    border-radius: 20px;
+    background-color: gainsboro;
+    margin-right: 2%;
+  }
+  
+  .save-picture-button:hover {
+    background-color: rgb(224, 235, 20); /* Adjust hover color as needed */
+  }
+  
+  .cancel-picture-button:hover {
+    background-color: gray; /* Adjust hover color as needed */
+  }
+
+
+/*////Log out////////////*/
+
+
+.LogOut-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.LogOut-window {
+  background-color: white;
+  border: 2px solid #ccc;
+  padding: 0px;
+  width: 200px; 
+  height: 120px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.LogOut {
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+
+}
+
+.LogOutBtn {
+  border: 2px solid black;
+  border-radius: 20px;
+  width: 120%;
+  align-self: center;
+}
+
+.LogOutSettingsLink {
+  color: black;
+  cursor: pointer;
+}
+
+
+
+
+
+  
+  
+  
