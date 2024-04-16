@@ -142,6 +142,7 @@
     cursor: pointer;
     color: black;
   }
+  
   .btn:hover,
   .btnBackToLogin:hover,
   .btnSubmitSignup:hover {

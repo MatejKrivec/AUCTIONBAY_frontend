@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import '../../assets/css/HomePage.css';
 import MainProfile from './MainProfile';
 import MainAuctions from './MainAuctions';
-import ProfileSettings from './ProfileSettings/ProfileSettings';
 import LogOut from './ProfileSettings/LogOut';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
 
@@ -14,7 +14,6 @@ const HomePage= () => {
     const handleTabChange = (tab: React.SetStateAction<string>) => {
         setActiveTab(tab);
     };
-
 
     const renderContent = () => {
         if (activeTab === 'profile') {
@@ -28,9 +27,13 @@ const HomePage= () => {
         }
     };
 
-    const handleProfilePicClick = () => {
+    const handleSettingsClick = () => {
       setIsLogOutVisible(!IsLogOutVisible)
     }
+
+    const handleSettingsClose= () => {
+        setIsLogOutVisible(!IsLogOutVisible)
+      }
 
     
 
@@ -42,19 +45,24 @@ const HomePage= () => {
                         <img src='.\src\assets\images\roundedLogo.png' alt="Logo" className="logo"></img>
                     </div>
                     <div className='NavButtons'>
-                        <button onClick={() => handleTabChange('auctions')} className={activeTab === 'auctions' ? 'active' : ''}>Auctions</button>
-                        <button onClick={() => handleTabChange('profile')} className={activeTab === 'profile' ? 'active' : ''}>Profile</button>
+                        <button onClick={() => handleTabChange('auctions')} className={activeTab === 'auctions' ? 'active' : ''}>
+                            <i className="fas fa-home"></i> Auctions
+                        </button>
+                        <button onClick={() => handleTabChange('profile')} className={activeTab === 'profile' ? 'active' : ''}>
+                            <i className="fas fa-user"></i> Profile
+                        </button>
                     </div>
                     <div className='ProfileNav'>
-                        <button  onClick={handleProfilePicClick} className='ProfileEditBtn'>+</button>
+                        <button  onClick={handleSettingsClick} className='ProfileEditBtn'>+</button>
                         <img src='.\src\assets\images\DefaultProfilePic.png' alt="ProfilePic" className="ProfilePicture"></img>
                     </div>
+                    
                     
                 </div>
             </header>
             {renderContent()}
             
-            {IsLogOutVisible && (<LogOut/>)}
+            {IsLogOutVisible && (<LogOut handleProfileSettingsClosee={handleSettingsClose}/>)}
             <footer className="footer">
                 <p>@Matej-Krivec-Skill-Up-Mentor</p>
             </footer>

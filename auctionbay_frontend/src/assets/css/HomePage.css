@@ -10,14 +10,28 @@
     height: 20%; 
 }
 
+.NavButtons {
+    background-color: white; /* Set the background color for the active button */
+    border-radius: 20px;
+    border: none;
+  }
+
+  .NavButtons button {
+    background-color: white; /* Default background color */
+    border: none;
+    border-radius: 20px;
+    margin-right: 2px;
+  }
+
 .NavButtons button.active {
     background-color: lightblue; /* Set the background color for the active button */
+    border: none;
   }
 
 .logoContainer {
     display: flex;
     align-items: center;
-    margin-left: 2%;
+
 }
 
 .ProfileNav {
@@ -50,38 +64,18 @@
     margin-left: 3%;
 }
 
-.ContentOptions {
-    display: flex;
-    justify-content: center;
-}
-
-.ContentOptions button.active {
-    background-color: lightblue; /* Set the background color for the active button */
-  }
-
-.MyAuctions {
-    display: flex;
-    justify-content: center;
-    align-self: center;
-}
-.Bidding {
-    display: flex;
-    justify-content: center;
-    align-self: center;
-}
-.Won {
-    display: flex;
-    justify-content: center;
-    align-self: center;
-}
 
 .footer {
   width: 100%;
-  background-color: #f0f0f0; 
+  background-color: lightblue; 
   text-align: center;
-  padding: 10px 0; 
-  position: fixed;  
+  padding: 1px 0; 
+  position: fixed; 
+  height: 5%; 
   bottom: 0;
+  justify-content: center;
+  align-items: center;
+  
 }
 
 

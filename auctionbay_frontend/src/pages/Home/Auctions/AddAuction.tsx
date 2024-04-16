@@ -1,0 +1,76 @@
+import React, { useState } from 'react'
+import '../../../assets/css/AddAuction.css';
+
+const AddAuction = ({handleCancelAddClick}: {handleCancelAddClick:() => void}) => {
+
+    const [imageUploaded, setImageUploaded] = useState(false);
+    const [image, setImage] = useState<string | null>(null);
+
+    const handleAddImageClick = (event: React.ChangeEvent<HTMLInputElement>) => { // Change event type to React.ChangeEvent<HTMLInputElement>
+        const file = event.target.files?.[0]; // Use optional chaining
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            if (typeof reader.result === 'string') { // Check if reader.result is string
+                setImage(reader.result);
+            }
+        };
+
+        if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) { // Check file type
+            reader.readAsDataURL(file);
+            setImageUploaded(true);
+        }
+    }
+
+    const handleDeleteImageClick = () => {
+        setImage(null);
+        setImageUploaded(false);
+    }
+
+   
+
+  return (
+    <div className="AddAuction-overlay">
+     <div className="AddAuction-window">
+        <div className='addAuction'>
+            <h2 className='title'>Add auction</h2>
+            <div className='imageContainer' >
+                {imageUploaded ? (
+                    <>
+                        {image && <img src={image} alt="Uploaded image" className='imagePic' />}
+                         <button className='deleteImageBtn' onClick={handleDeleteImageClick}><i className='fas fa-trash'></i></button>
+                    </>
+                    ) : (
+                        <input className='AddImageInput' type="file" accept="image/jpeg, image/png" onChange={handleAddImageClick} />
+                )}
+            </div>
+            <div className='forma'>
+                <div className='titleANDdescription'>
+                    <label htmlFor="Title">Title</label>
+                    <input className='titleTextInput' type="text" id="Title" name="Title"></input>
+
+                    <label htmlFor="Description">Description</label>
+                    <textarea id="Description" name="Description"></textarea>
+                </div>
+                <div className='row'>
+                  <div className="priceDiv">
+                    <label htmlFor="Price">Starting price</label>
+                    <input type="number" id="Price" name="Price"></input>
+                  </div>
+                  <div className="dateDiv">
+                    <label htmlFor="ExpDate">End date</label>
+                    <input type="date" id="ExpDate" name="ExpDate"></input>
+                  </div>
+                </div>
+            </div>
+            <div className='btnContainer'>
+                <button className='cancelBtn' onClick={handleCancelAddClick}>Cancel</button>
+                <button className='StartAuctionBtn'>Start auction</button>
+            </div>
+        </div>
+     </div>
+    </div>
+  )
+}
+
+export default AddAuction

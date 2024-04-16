@@ -2,15 +2,18 @@ import React, { useState } from 'react'
 import ProfileSettings from './ProfileSettings';
 
 
-const LogOut = () => {
+const LogOut = ({handleProfileSettingsClosee}:{handleProfileSettingsClosee: () => void}) => {
     const [isProfileSettingsVisible, setProfileSettingsVisible] = useState(false);
 
     const handleProfileSettingsToggle = () => {
         setProfileSettingsVisible(!isProfileSettingsVisible);
     };
 
-    const handleProfileSettingsClose = () => {
-      setProfileSettingsVisible(false); // Close the profile settings window
+    const handleProfileSettingsClose = () => {      // Je uporabno ce zelis closati component al pa poslat data iz dva nivoja ali vec nizje
+        if(handleProfileSettingsClosee){
+            handleProfileSettingsClosee();
+          }
+      setProfileSettingsVisible(false); 
     };
     
     return (
@@ -23,6 +26,7 @@ const LogOut = () => {
                         <div className='LogOut'>
                             <a className='LogOutSettingsLink' onClick={handleProfileSettingsToggle}>&#x2699; Profile settings</a>
                             <button className='LogOutBtn'>Log out</button>
+                            
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,40 @@
+.OptionBtns {
+    display: flex;
+    justify-content: center;
+}
+
+.ContentOptions {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    background-color: lightcyan;
+    padding: 1%;
+    border-radius: 50px;
+    width: fit-content;
+}
+
+.ContentOptions button {
+    background-color: lightcyan;
+}
+
+.ContentOptions button.active {
+    background-color: black; /* Set the background color for the active button */
+    color: white;
+    border-radius: 20px;
+  }
+
+.MyAuctions {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+.Bidding {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+.Won {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}

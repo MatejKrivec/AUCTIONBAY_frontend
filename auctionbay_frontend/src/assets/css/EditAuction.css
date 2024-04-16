@@ -1,0 +1,132 @@
+.AddAuction-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .AddAuction-window {
+    background-color: white;
+    border: 2px solid #ccc;
+    padding: 20px;
+    width: 400px; 
+    height: 480px;
+    border-radius: 20px;
+  }
+
+  .title{
+    margin-top: 0%;
+    margin-bottom: 1%;
+  }
+
+  .addAuction {
+    width: 100%;
+    height: 100%;
+  }
+
+  .imageContainer {
+    background-color: gainsboro;
+    height: 35%;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    border-radius: 20px;
+    margin-bottom: 1%;
+
+  }
+  
+
+  /*          form         */
+
+  .forma {
+    height: 49%;
+  }
+
+  label {
+    display: flex;
+    margin-bottom: 5px;
+    align-self: flex-start;
+  }
+
+  .titleANDdescription textarea {
+    overflow-y: auto;
+  }
+
+  .titleANDdescription input[type="text"]
+  {
+    width: 382.67px;
+    border-radius: 20px;
+  }
+ 
+  .titleANDdescription textarea {
+    width: 400px;
+    height: 60px;
+    max-height: 70px; 
+    resize: vertical;
+  }
+  
+  textarea,
+  input[type="number"],
+  input[type="date"] {
+    display: flex;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    box-sizing: border-box;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+  }
+  
+  .dateDiv {
+    display: block; 
+    align-self: flex-end; 
+    justify-content: flex-end; 
+    width: 100%; 
+  }
+
+
+  .dateDiv input[type="date"] {
+    width: 100%; 
+    margin-right: auto;
+  }
+ 
+
+
+/*          buttons         */
+
+  .btnContainer {
+    display: flex;
+    justify-content: end;
+    margin-top: 0%;
+    overflow: hidden;
+  }
+
+  .EditAuctionBtn {
+    background-color: rgb(244, 255, 39);
+    border-radius: 20px;
+  }
+  .cancelBtn {
+    margin-right: 2%;
+    background-color: gainsboro;
+    border-radius: 20px;
+  }
+  
+  .EditAuctionBtn:hover {
+    background-color: rgb(224, 235, 20);
+  }
+  
+  .cancelBtn:hover {
+    background-color: gray; 
+  }
+  
+  
+

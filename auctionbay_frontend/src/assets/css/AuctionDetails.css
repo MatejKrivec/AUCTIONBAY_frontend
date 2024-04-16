@@ -1,0 +1,55 @@
+.auction-details-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.image-container {
+  flex: 1;
+  border: 1px solid black;
+  height: 78vh;
+  
+  border-radius: 20px;
+  margin-right: 1%;
+  margin-left: 1%;
+  margin-top: 1%;
+  overflow: hidden;
+}
+
+.image-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+.details-container {
+  flex: 1;
+  
+  height: 78vh;
+  display: block;
+  justify-content: space-around;
+
+  margin-right: 1%;
+  margin-top: 1%;
+  
+}
+
+.description {
+  padding: 1%;
+  height: 34%;
+  border: 1px solid black;
+  border-radius: 20px;
+  align-self: flex-start;
+}
+
+.bids{
+  padding: 1%;
+  margin-top: 1%;
+  height: 58.5%;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+
+
+
+/* Additional styling can be added as needed */
+
