@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import '../../assets/css/MainAuctions.css';
 import AuctionDetails from './Auctions/AuctionDetails'; // Import the AuctionDetails component
 
-interface ImageData {
+/*interface ImageData {
   type: string;
   data: number[]; // Assuming the image data is an array of numbers representing the buffer data
-}
+}*/
 
 interface Auction {
   auctionId: number;
   name: string;
   description: string;
-  image: ImageData;
+  image: string;
   startingPrice: number;
   maxPrice: number;
   price: number;
@@ -19,9 +19,9 @@ interface Auction {
   endTime: string;
 }
 
-const convertByteaToBase64 = (bufferData: number[]) => {
+/*const convertByteaToBase64 = (bufferData: number[]) => {
   return String.fromCharCode.apply(null, bufferData);
-};
+};*/
 
 const AuctionItem = ({ auction, onClick }: { auction: Auction, onClick: () => void }) => {
   const getStatusString = () => {
@@ -32,7 +32,7 @@ const AuctionItem = ({ auction, onClick }: { auction: Auction, onClick: () => vo
     return 'time'
   };
 
-  const imageData = auction.image ? `data:${auction.image.type};base64,${convertByteaToBase64(auction.image.data)}` : '';
+  //const imageData = auction.image ? `data:${auction.image.type};base64,${convertByteaToBase64(auction.image.data)}` : '';
 
   return (
     <div className='auctionItem' onClick={onClick}>
@@ -43,7 +43,7 @@ const AuctionItem = ({ auction, onClick }: { auction: Auction, onClick: () => vo
       <div className='name'>{auction.name}</div>
       <div className='price'>Price: ${auction.price}</div>
       <div className='ImageContainer'>
-        <img src={imageData} alt={auction.name}  className='imagePic'/>
+        <img src={auction.image} alt={auction.name}  className='imagePic'/>
       </div>
     </div>
   );

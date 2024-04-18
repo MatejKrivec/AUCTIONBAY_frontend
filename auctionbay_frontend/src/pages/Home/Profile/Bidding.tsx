@@ -58,9 +58,6 @@ const Bidding = () => {
   return (
     <div>
       <main className='main'>
-        <div className='HelloUserText'>
-          <h1>Auctions</h1>
-        </div>
         <div className='auctionsContainer'>
           {auctions.map((auction) => (
             <AuctionItem key={auction.auctionId} auction={auction} />

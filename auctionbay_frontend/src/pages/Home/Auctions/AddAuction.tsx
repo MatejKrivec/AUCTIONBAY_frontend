@@ -1,76 +1,153 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import '../../../assets/css/AddAuction.css';
 
-const AddAuction = ({handleCancelAddClick}: {handleCancelAddClick:() => void}) => {
-
-    const [imageUploaded, setImageUploaded] = useState(false);
-    const [image, setImage] = useState<string | null>(null);
-
-    const handleAddImageClick = (event: React.ChangeEvent<HTMLInputElement>) => { // Change event type to React.ChangeEvent<HTMLInputElement>
-        const file = event.target.files?.[0]; // Use optional chaining
-        const reader = new FileReader();
-
-        reader.onloadend = () => {
-            if (typeof reader.result === 'string') { // Check if reader.result is string
-                setImage(reader.result);
-            }
-        };
-
-        if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) { // Check file type
-            reader.readAsDataURL(file);
-            setImageUploaded(true);
-        }
-    }
-
-    const handleDeleteImageClick = () => {
-        setImage(null);
-        setImageUploaded(false);
-    }
-
+const AddAuction = ({ handleCancelAddClick }: { handleCancelAddClick: () => void }) => {
+  const [imageUploaded, setImageUploaded] = useState(false);
+  const [image, setImage] = useState<string | null>(null);
+  const [imageKey, setImageKey] = useState<string | null>(null); // State variable for image key
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+    startingPrice: '',
+    endTime: '',
    
+  });
+
+  const handleAddImageClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    const reader = new FileReader();
+
+   const generateImageKey = (): string => {
+      return `auction-image-${Date.now()}`;
+    };
+
+    reader.onloadend = () => {
+      if (typeof reader.result === 'string') {
+        setImageUploaded(true);
+        const key = generateImageKey();
+        setImageKey(key)
+        localStorage.setItem(key, reader.result); // Store the image data in local storage
+        setImage(reader.result); // Set the key in state
+      }
+    };
+
+    if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    const parsedValue = name === 'startingPrice' ? parseFloat(value) : value; // Parse value to number if it's startingPrice
+    setFormData({ ...formData, [name]: parsedValue });
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleDeleteImageClick = () => {
+    setImage(null);
+    setImageUploaded(false);
+  };
+
+  const handleStartAuctionSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Prevent default form submission behavior
+    try {
+      if (!image) {
+        throw new Error('Please upload an image');
+      }
+
+      // Get the userId from local storage
+      const userId = localStorage.getItem('UserId');
+      if (!userId) {
+        throw new Error('UserId not found in local storage');
+      }
+      console.log('user id  ' + userId)
+
+      const auctionData = {
+        ...formData,
+        userId: parseInt(userId, 10), // Convert userId to a number
+        image: imageKey, // Include the image data
+        startTime: new Date(), // Set startTime to the current date-time
+        maxPrice: 1000, // Set maxPrice to 1000
+        price: parseFloat(formData.startingPrice), // Set price to some default value
+        startingPrice: parseFloat(formData.startingPrice),
+        endTime: new Date(formData.endTime).toISOString()
+      };
+
+      // Make the API request to create the auction
+      const response = await fetch('http://localhost:3000/auctions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(auctionData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create auction');
+      }
+
+      console.log('Auction data:', auctionData);
+      // Reset the form after successful submission
+      setImage(null);
+      setImageUploaded(false);
+      setFormData({
+        name: '',
+        description: '',
+        startingPrice: ' ',
+        endTime: ''
+  
+      }); 
+
+      handleCancelAddClick();
+    } catch (error) {
+      console.error('Error creating auction:', error);
+    }
+  };
 
   return (
     <div className="AddAuction-overlay">
-     <div className="AddAuction-window">
+      <div className="AddAuction-window">
         <div className='addAuction'>
-            <h2 className='title'>Add auction</h2>
-            <div className='imageContainer' >
-                {imageUploaded ? (
-                    <>
-                        {image && <img src={image} alt="Uploaded image" className='imagePic' />}
-                         <button className='deleteImageBtn' onClick={handleDeleteImageClick}><i className='fas fa-trash'></i></button>
-                    </>
-                    ) : (
-                        <input className='AddImageInput' type="file" accept="image/jpeg, image/png" onChange={handleAddImageClick} />
-                )}
-            </div>
+          <h2 className='title'>Add auction</h2>
+          <div className='imageContainer' >
+            {imageUploaded ? (
+              <>
+                {image && <img src={image} alt="Uploaded image" className='imagePic' />}
+                <button className='deleteImageBtn' onClick={handleDeleteImageClick}><i className='fas fa-trash'></i></button>
+              </>
+            ) : (
+              <input className='AddImageInput' type="file" accept="image/jpeg, image/png" onChange={handleAddImageClick} />
+            )}
+          </div>
+          <form onSubmit={handleStartAuctionSubmit}>
             <div className='forma'>
-                <div className='titleANDdescription'>
-                    <label htmlFor="Title">Title</label>
-                    <input className='titleTextInput' type="text" id="Title" name="Title"></input>
+              <div className='titleANDdescription'>
+                <label htmlFor="Title">Title</label>
+                <input className='titleTextInput' type="text" id="Title" name="name" value={formData.name} onChange={handleInputChange} />
 
-                    <label htmlFor="Description">Description</label>
-                    <textarea id="Description" name="Description"></textarea>
+                <label htmlFor="Description">Description</label>
+                <textarea id="Description" name="description" value={formData.description} onChange={handleInputChange}></textarea>
+              </div>
+              <div className='row'>
+                <div className="priceDiv">
+                  <label htmlFor="Price">Starting price</label>
+                  <input type="number" id="Price" name="startingPrice" value={formData.startingPrice} onChange={handleInputChange} />
                 </div>
-                <div className='row'>
-                  <div className="priceDiv">
-                    <label htmlFor="Price">Starting price</label>
-                    <input type="number" id="Price" name="Price"></input>
-                  </div>
-                  <div className="dateDiv">
-                    <label htmlFor="ExpDate">End date</label>
-                    <input type="date" id="ExpDate" name="ExpDate"></input>
-                  </div>
+                <div className="dateDiv">
+                  <label htmlFor="ExpDate">End date</label>
+                  <input type="date" id="ExpDate" name="endTime" value={formData.endTime} onChange={handleInputChange} />
                 </div>
+              </div>
             </div>
             <div className='btnContainer'>
-                <button className='cancelBtn' onClick={handleCancelAddClick}>Cancel</button>
-                <button className='StartAuctionBtn'>Start auction</button>
+              <button className='cancelBtn' onClick={handleCancelAddClick}>Cancel</button>
+              <button className='StartAuctionBtn' type='submit'>Start auction</button>
             </div>
+          </form>
         </div>
-     </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default AddAuction
+export default AddAuction;

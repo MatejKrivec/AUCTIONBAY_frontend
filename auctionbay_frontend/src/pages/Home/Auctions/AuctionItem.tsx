@@ -13,7 +13,7 @@ interface Auction {
     endTime: string;
   }
   
-const AuctionItem = ({ auction, handleEditAuctionClick }: { auction: Auction; handleEditAuctionClick: () => void }) => {
+const AuctionItem = ({ auction, handleEditAuctionClick, handleDeleteAuctionClick }: { auction: Auction; handleEditAuctionClick: () => void;handleDeleteAuctionClick: (auctionId: number) => void;  }) => {
     const getStatusString = () => {
       return 'status';
     };
@@ -21,6 +21,14 @@ const AuctionItem = ({ auction, handleEditAuctionClick }: { auction: Auction; ha
     const getTimeRemainingString = () => {
       return 'time';
     };
+
+    // Function to get image from local storage using the key
+    const getImageFromLocalStorage = (key: string) => {
+      const image = localStorage.getItem(key);
+      return image ? image : ''; // Return empty string if image is not found
+    };
+
+   
   
     return (
       <div className='auctionItem'>
@@ -30,9 +38,9 @@ const AuctionItem = ({ auction, handleEditAuctionClick }: { auction: Auction; ha
         </div>
         <div className='name'>{auction.name}</div>
         <div className='price'>Price: ${auction.price}</div>
-        <img src={auction.image} alt={auction.name} className='image' />
+        <img src={getImageFromLocalStorage(auction.image)} alt={auction.name} className='image' />
         <div className='buttonsContainer'>
-          <button className='deleteBtn'><i className='fas fa-trash'></i></button>
+          <button className='deleteBtn' onClick={() => handleDeleteAuctionClick(auction.auctionId)}><i className='fas fa-trash'></i></button>
           <button className='editBtn' onClick={handleEditAuctionClick}><i className='fas fa-edit'></i> Edit</button>
         </div>
       </div>

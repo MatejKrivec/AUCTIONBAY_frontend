@@ -49,4 +49,12 @@
     height: 90%;
     border-radius: 5px;
   }
+
+
+  /* AUCTION ITEM */
+  .image {
+    width: 200px; 
+    height: 150px; 
+    object-fit: cover; 
+  }
   

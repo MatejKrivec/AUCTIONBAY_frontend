@@ -12,11 +12,13 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.5.2",
     "@progress/kendo-react-popup": "^7.3.0",
+    "jsonwebtoken": "^9.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",

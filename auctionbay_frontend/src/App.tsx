@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 //import './App.css'
 
-import { BrowserRouter as Router, Route,Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route,Routes, Link, Navigate } from 'react-router-dom';
 
 import Signup from './pages/AuthPages/Signup';
 import Login from './pages/AuthPages/Login';
@@ -29,28 +29,45 @@ import ProfileSettings from './pages/Home/ProfileSettings/ProfileSettings';
 
 
 function App() {
-  
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<InitPage />}/>
-        <Route path="/signup" element={<Signup/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/ResetPassword" element={<ResetPassword/>} />
+        <Route path="/" element={<InitPage />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ResetPassword />} />
 
-        <Route path="/me" element={<MainProfile/>}>
-        <Route path="/auctions" element={<MainAuctions/>} />
-        <Route path="/me/auction" element={<AddAuction/>} />
-        <Route path="/me/auction/:id" element={<EditAuction/>} />
-        <Route path="/auctions/:id/bid" element={<AuctionDetails/>} />
-        <Route path="/me/update-password" element={<ChangePassword />} />
+        {/* Protected routes */}
+        <Route  element={<RouteGuard children={<HomePage/>} />}>
+          {/* Define nested routes here */}
+          <Route path="/me" element={<HomePage />} />
+          <Route path="auctions" element={<MainAuctions />} />
+          <Route path="auction" element={<AddAuction handleCancelAddClick={() => {}} />} />
+          <Route path="auction/:id" element={<EditAuction handleCancleEditClick={() => {}} />} />
+          <Route path="auctions/:id/bid" element={<AuctionDetails />} />
+          <Route path="update-password" element={<ChangePassword onClose={() => {}} />} />
+          <Route path="settings" element={<ProfileSettings onClose={() => {}} />} >
+            <Route path="change-profile-picture" element={<ChangeProfilePicture onClose={() => {}} />} />
+            <Route path="log-out" element={<LogOut handleProfileSettingsClosee={() => {}} />} />
+          </Route>
         </Route>
-        <Route path="/me/settings" element={<ProfileSettings/>}>
-          <Route path="/me/settings/change-profile-picture" element={<ChangeProfilePicture/>} />
-          <Route path="/me/log-out" element={<LogOut/>} />
-        </Route>
+
+        {/* Redirect to login if not logged in */}
+        <Route path="/*" element={<Navigate to="/login" />} />
       </Routes>
-    </Router> 
-  )
+    </Router>
+  );
 }
-export default App
+
+function RouteGuard({ children }: { children: React.ReactNode }) {
+
+  const isLoggedIn = !!localStorage.getItem('token');
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
+
+  return <>{children}</>;
+}
+
+export default App;

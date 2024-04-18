@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import '../../assets/css/AuthPages.css';
 
 const ResetPassword = () => {
@@ -18,7 +19,7 @@ const ResetPassword = () => {
               <input type="Email" className="form-control" id="Email" name="Email" />
             </div>
             <button type="submit" className="btnBackToLogin">Reset password</button>
-            <a href="#" className="linkBackToLogn"> &lt; Back to login </a>
+            <Link className="linkBackToLogin" to="/login">&lt; Back to login</Link>
         </form>
         </div>
     </div>

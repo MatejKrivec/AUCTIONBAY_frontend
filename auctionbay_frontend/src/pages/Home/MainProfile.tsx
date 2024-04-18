@@ -8,15 +8,20 @@ import Won from './Profile/Won';
 
 const MainProfile = () => {
     const [selectedOption, setSelectedOption] = useState('option1');
+    const [username, setUsername] = useState('');
 
     const handleChange = (option: React.SetStateAction<string>) => {
       setSelectedOption(option);
+    };
+
+    const handleUsernameReceived = (username: string) => {
+      setUsername(username);
     };
   
     const renderContent = () => {
       switch (selectedOption) {
         case 'option1':
-          return <MyAuctions/>;
+          return <MyAuctions onUsernameReceived={handleUsernameReceived}/>;
         case 'option2':
           return <Bidding/>;
         case 'option3':
@@ -30,7 +35,7 @@ const MainProfile = () => {
       <div>
         <main className='main'>
           <div className='HelloUserText'>
-            <h1>Hello Skill up Mentor !</h1>
+          <h1>Hello {username}!</h1>
           </div>
           <div className='OptionBtns'>
             <div className='ContentOptions'>

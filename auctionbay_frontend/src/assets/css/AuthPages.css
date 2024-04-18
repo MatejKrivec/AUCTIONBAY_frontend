@@ -42,8 +42,28 @@
   }
   
   /* Form Styles */
+  .auctionText{
+    margin-right: 1%;
+  }
   .LoginText {
     font-size: 100%;
+    margin-right: 2%;
+  }
+  .SigninText{
+    margin-right: 2%;
+  }
+  .esetPasswordText{
+    margin-right: 2%;
+  }
+
+  #username {
+    border-radius: 20px;
+  }
+  #surname{
+    border-radius: 20px;
+  }
+  #Email{
+    border-radius: 20px;
   }
   
   .form {
@@ -90,24 +110,39 @@
     border: 1px solid #ccc;
     margin-right: 40px;
   }
+
+  .paragraph {
+    margin-right: 4%;
+  }
+  .SignUpParagraph{
+    margin-right: 4%;
+  }
+
+  .LoginToSignupLink {
+    color: black;
+  }
+  .SignUpToLoginLink {
+    color: black;
+  }
   
   .LoginForm {
     margin: 3%;
-    margin-right: 10%;
+    margin-right: 4%;
   }
   .SigninForm {
     margin: 3%;
-    margin-right: 10%;
+    margin-right: 4%;
   }
   .ResetPasswordForm{
     margin: 3%;
-    margin-right: 10%;
+    margin-right: 4%;
   }
   
   .btn {
     margin-top: 7%;
-    margin-left: 3%;
-    width: 100%;
+    
+    margin-right: 4%;
+    width: 504.5px;
     padding: 10px;
     background-color: rgb(244, 255, 39);
     color: white;
@@ -119,8 +154,9 @@
   
   .btnBackToLogin{
     margin-top: 2%;
-    margin-left: 3%;
-    width: 100%;
+
+    margin-right: 4%;
+    width: 504.5px;
     padding: 10px;
     background-color: rgb(244, 255, 39);
     color: white;
@@ -132,8 +168,9 @@
 
   .btnSubmitSignup{
     margin-top: 2%;
-    margin-left: 3%;
-    width: 100%;
+    
+    margin-right: 4%;
+    width: 504.6px;
     padding: 10px;
     background-color: rgb(244, 255, 39);
     color: white;
@@ -154,15 +191,17 @@
   .link {
     display: block;
     text-align: right;
+    margin-right: 1%;
   }
   
-  .linkBackToLogn {
+  .linkBackToLogin {
     margin-top: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
     color: gray;
-    margin-left: 3.5%;
+
+    margin-right: 4%;
   }
 
   .SignUpParagraph{
