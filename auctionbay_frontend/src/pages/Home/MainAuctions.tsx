@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../assets/css/MainAuctions.css';
 import AuctionDetails from './Auctions/AuctionDetails'; // Import the AuctionDetails component
+import AuctionItem from './Auctions/AuctionItem';
 
 /*interface ImageData {
   type: string;
@@ -19,65 +20,69 @@ interface Auction {
   endTime: string;
 }
 
-/*const convertByteaToBase64 = (bufferData: number[]) => {
-  return String.fromCharCode.apply(null, bufferData);
-};*/
 
-const AuctionItem = ({ auction, onClick }: { auction: Auction, onClick: () => void }) => {
-  const getStatusString = () => {
-    return 'status'
-  };
-
-  const getTimeRemainingString = () => {
-    return 'time'
-  };
-
-  //const imageData = auction.image ? `data:${auction.image.type};base64,${convertByteaToBase64(auction.image.data)}` : '';
-
-  return (
-    <div className='auctionItem' onClick={onClick}>
-      <div className='status'>
-        <p>{getStatusString()}</p>
-        <p>{getTimeRemainingString()}</p>
-      </div>
-      <div className='name'>{auction.name}</div>
-      <div className='price'>Price: ${auction.price}</div>
-      <div className='ImageContainer'>
-        <img src={auction.image} alt={auction.name}  className='imagePic'/>
-      </div>
-    </div>
-  );
-};
 
 const MainAuctions = () => {
   const [auctions, setAuctions] = useState<Auction[]>([]);
-  const [selectedAuction, setSelectedAuction] = useState<Auction | null>(null); // State to manage selected auction
+  const [selectedAuction, setSelectedAuction] = useState<Auction | null>(null); 
 
   useEffect(() => {
     fetchAuctions();
   }, []);
 
   const fetchAuctions = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('Token not found');
+      return;
+    }
+    
     try {
-      const response = await fetch('http://localhost:3000/auctions');
+      const response = await fetch('http://localhost:3000/decode', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          token: token
+        })
+      });
+      
       if (!response.ok) {
-        throw new Error('Failed to fetch data');
+        throw new Error('Failed to decode token');
       }
-      const data = await response.json();
-      setAuctions(data);
+      
+      const userData = await response.json();
+
+      const userId = userData.id;
+
+      //localStorage.setItem('UserId', userId);
+
+  
+      const auctionsResponse = await fetch(`http://localhost:3000/auctions/akcije/${userId}`);
+      if (!auctionsResponse.ok) {
+        throw new Error('Failed to fetch auctions');
+      }
+      const auctionsData = await auctionsResponse.json();
+
+      const auctionsArray = Array.isArray(auctionsData) ? auctionsData : [auctionsData];
+      setAuctions(auctionsArray);
+
+
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
+
   const handleAuctionClick = (auction: Auction) => {
-    setSelectedAuction(auction); // Set selected auction when clicked
+    setSelectedAuction(auction); 
   };
 
   return (
     <div>
       {selectedAuction ? (
-        <AuctionDetails  />
+        <AuctionDetails auction={selectedAuction}  />
       ) : (
         <div className='main'>
           <div className='HelloUserText'>

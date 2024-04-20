@@ -26,8 +26,8 @@ const AddAuction = ({ handleCancelAddClick }: { handleCancelAddClick: () => void
         setImageUploaded(true);
         const key = generateImageKey();
         setImageKey(key)
-        localStorage.setItem(key, reader.result); // Store the image data in local storage
-        setImage(reader.result); // Set the key in state
+        localStorage.setItem(key, reader.result); 
+        setImage(reader.result); 
       }
     };
 
@@ -49,13 +49,12 @@ const AddAuction = ({ handleCancelAddClick }: { handleCancelAddClick: () => void
   };
 
   const handleStartAuctionSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Prevent default form submission behavior
+    event.preventDefault(); 
     try {
       if (!image) {
         throw new Error('Please upload an image');
       }
 
-      // Get the userId from local storage
       const userId = localStorage.getItem('UserId');
       if (!userId) {
         throw new Error('UserId not found in local storage');
@@ -64,16 +63,15 @@ const AddAuction = ({ handleCancelAddClick }: { handleCancelAddClick: () => void
 
       const auctionData = {
         ...formData,
-        userId: parseInt(userId, 10), // Convert userId to a number
-        image: imageKey, // Include the image data
-        startTime: new Date(), // Set startTime to the current date-time
-        maxPrice: 1000, // Set maxPrice to 1000
-        price: parseFloat(formData.startingPrice), // Set price to some default value
+        userId: parseInt(userId, 10), 
+        image: imageKey, 
+        startTime: new Date(), 
+        maxPrice: 1000, 
+        price: parseFloat(formData.startingPrice), 
         startingPrice: parseFloat(formData.startingPrice),
         endTime: new Date(formData.endTime).toISOString()
       };
 
-      // Make the API request to create the auction
       const response = await fetch('http://localhost:3000/auctions', {
         method: 'POST',
         headers: {
@@ -86,7 +84,7 @@ const AddAuction = ({ handleCancelAddClick }: { handleCancelAddClick: () => void
         throw new Error('Failed to create auction');
       }
 
-      console.log('Auction data:', auctionData);
+      //console.log('Auction data:', auctionData);
       // Reset the form after successful submission
       setImage(null);
       setImageUploaded(false);

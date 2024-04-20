@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../../assets/css/MyAuctions.css';
 import AddAuction from '../Auctions/AddAuction';
 import EditAuction from '../Auctions/EditAuction';
-import AuctionItem from '../Auctions/AuctionItem';
+import AuctionItem from '../Auctions/MyAuctionItem';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
 interface Auction {
@@ -26,6 +26,12 @@ const MyAuctions = ({ onUsernameReceived }: Props) => {
   const [auctions, setAuctions] = useState<Auction[]>([]);
   const [addAuctionVisible, setAddAuctionVisible] = useState(false);
   const [editAuctionVisible, setEditAuctionVisible] = useState(false); // State for edit auction visibility
+  const [editImageKey, setEditImageKey] = useState<string | null>(null); // State for storing image key of the auction being edited
+  const [editAuctionId, setEditAuctionId] = useState<number | null>(null); // State for storing the ID of the auction being edited
+ /* const [editAuctionName, setEditAuctionName] = useState<string | null>(null);
+  const [editAuctionDescription, setEditAuctionDescription] = useState<string  | null>(null);
+  const [editAuctionEndTime, setEditAuctionEndTime] = useState<string | null>(null);*/
+
 
   useEffect(() => {
     fetchAuctions();
@@ -37,8 +43,6 @@ const MyAuctions = ({ onUsernameReceived }: Props) => {
       console.error('Token not found');
       return;
     }
-
-    //console.log('toukeen:  '+token)
     
     try {
       const response = await fetch('http://localhost:3000/decode', {
@@ -63,20 +67,16 @@ const MyAuctions = ({ onUsernameReceived }: Props) => {
       localStorage.setItem('UserId', userId);
 
       onUsernameReceived(userNAME);
-      
-     // console.log('User id:', userId);
-     // console.log('UserName:', userNAME);
   
-      // Now you can use the decoded user ID to fetch auctions
       const auctionsResponse = await fetch(`http://localhost:3000/auctions/${userId}`);
       if (!auctionsResponse.ok) {
         throw new Error('Failed to fetch auctions');
       }
       const auctionsData = await auctionsResponse.json();
-      //console.log(auctionsData);
-      // Check if auctionsData is an object, and if so, convert it to an array
+
       const auctionsArray = Array.isArray(auctionsData) ? auctionsData : [auctionsData];
       setAuctions(auctionsArray);
+
 
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -87,16 +87,27 @@ const MyAuctions = ({ onUsernameReceived }: Props) => {
     setAddAuctionVisible(!addAuctionVisible);
   };
 
-  const handleEditAuctionClick = () => {
-    setEditAuctionVisible(!editAuctionVisible);
+  const handleEditAuctionClick = (auctionId: number) => {
+    // Set editAuctionVisible to true and also set the image key for the auction being edited
+    setEditAuctionVisible(true);
+    const auctionToEdit = auctions.find(auction => auction.auctionId === auctionId);
+    if (auctionToEdit) {
+      setEditImageKey(auctionToEdit.image);
+      setEditAuctionId(auctionId);
+    /*  setEditAuctionName(auctionToEdit.name)
+      setEditAuctionDescription(auctionToEdit.description)
+      setEditAuctionEndTime(auctionToEdit.endTime)*/
+    }
   };
 
   const handleCancleEditClick = () => {
     setEditAuctionVisible(!editAuctionVisible);
+    window.location.reload();
   }
 
   const handleCancleAddClick = () => {
     setAddAuctionVisible(!addAuctionVisible);
+    window.location.reload();
   }
 
   const handleDeleteAuctionClick = async (auctionId: number) => {
@@ -140,12 +151,10 @@ const MyAuctions = ({ onUsernameReceived }: Props) => {
           <button className='addAuctionBtn' onClick={handleAddAuctionClick}><i className='fas fa-plus'></i></button>
         </div>
         {addAuctionVisible && (<AddAuction handleCancelAddClick={handleCancleAddClick}/>)}
-        {editAuctionVisible && (<EditAuction handleCancleEditClick={handleCancleEditClick}/>)}
+        {editAuctionVisible && (<EditAuction handleCancleEditClick={handleCancleEditClick} imageKey={editImageKey} auctionId={editAuctionId}/>)}
       </main>
     </div>
   );
 };
-
-
 
 export default MyAuctions;

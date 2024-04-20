@@ -17,8 +17,8 @@
 }
 
 .image-container img {
-  max-width: 100%;
-  height: auto;
+  width: 100%;
+  height: 100%;;
 }
 
 .details-container {
@@ -33,12 +33,33 @@
   
 }
 
+.auctionTitle{
+  margin: 0;
+}
+
+.BidParagraph,
+.StatusParagraph,
+.TimeParagraph{
+  margin: 1%;
+}
+
+.placeBidContainer{
+  display: flex;
+  justify-content: end;
+}
+
 .description {
   padding: 1%;
   height: 34%;
   border: 1px solid black;
   border-radius: 20px;
   align-self: flex-start;
+}
+
+.PlaceBidBtn{
+  background-color: rgb(244, 255, 39);
+  border-radius: 20px;
+  margin-left: 1%;
 }
 
 .bids{
@@ -48,6 +69,8 @@
   border: 1px solid black;
   border-radius: 20px;
 }
+
+
 
 
 

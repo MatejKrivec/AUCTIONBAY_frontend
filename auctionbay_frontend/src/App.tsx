@@ -15,7 +15,7 @@ import MainProfile from './pages/Home/MainProfile';
 
 import AddAuction from './pages/Home/Auctions/AddAuction';
 import AuctionDetails from './pages/Home/Auctions/AuctionDetails';
-import AuctionItem from './pages/Home/Auctions/AuctionItem';
+import AuctionItem from './pages/Home/Auctions/MyAuctionItem';
 import EditAuction from './pages/Home/Auctions/EditAuction';
 
 import Bidding from './pages/Home/Profile/Bidding';
