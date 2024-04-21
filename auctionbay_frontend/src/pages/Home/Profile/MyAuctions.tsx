@@ -18,11 +18,8 @@ interface Auction {
   endTime: string;
 }
 
-interface Props {
-  onUsernameReceived: (username: string) => void;
-}
 
-const MyAuctions = ({ onUsernameReceived }: Props) => {
+const MyAuctions = () => {
   const [auctions, setAuctions] = useState<Auction[]>([]);
   const [addAuctionVisible, setAddAuctionVisible] = useState(false);
   const [editAuctionVisible, setEditAuctionVisible] = useState(false); // State for edit auction visibility
@@ -38,35 +35,8 @@ const MyAuctions = ({ onUsernameReceived }: Props) => {
   }, []);
 
   const fetchAuctions = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      console.error('Token not found');
-      return;
-    }
-    
     try {
-      const response = await fetch('http://localhost:3000/decode', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          token: token
-        })
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to decode token');
-      }
-      
-      const userData = await response.json();
-     // console.log('User data:', userData); // Log the entire userData object
-      const userId = userData.id;
-      const userNAME = userData.username;
-
-      localStorage.setItem('UserId', userId);
-
-      onUsernameReceived(userNAME);
+      const userId = localStorage.getItem('UserId');
   
       const auctionsResponse = await fetch(`http://localhost:3000/auctions/${userId}`);
       if (!auctionsResponse.ok) {

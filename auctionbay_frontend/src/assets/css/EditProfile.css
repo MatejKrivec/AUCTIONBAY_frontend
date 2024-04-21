@@ -260,23 +260,36 @@
     display: flex;
     flex-direction: column;
     align-items: center; /* Center items horizontally */
+    margin-bottom: 0px;
   }
   
   .UploadPictureBtn{
+    padding: 3%;
     border: 2px solid black;
-    border-radius: 20px;
+    border-radius: 30px;
+    align-self: center;
+    cursor: pointer;
+    margin-bottom: 0px;
   }
 
   .UploadPictureBtn:hover {
     background-color: gainsboro; /* Adjust hover color as needed */
   }
   
-
   .ProfilePic {
-    max-width: 20%; 
-    max-height: 20%; 
+    max-width: 90px; 
+    max-height: 90px; 
+    min-width: 90px;
+    min-height: 90px;
     margin-bottom: 15px;
+    border-radius: 50px;
 }
+
+  .buttonsContainer{
+    margin-top: 4%;
+    display: flex;
+    justify-content: end;
+  }
   
   .save-picture-button {
     background-color: rgb(244, 255, 39);
@@ -295,6 +308,8 @@
   .cancel-picture-button:hover {
     background-color: gray; /* Adjust hover color as needed */
   }
+
+  
 
 
 /*////Log out////////////*/

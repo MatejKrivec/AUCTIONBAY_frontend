@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link} from 'react-router-dom';
 import '../../assets/css/AuthPages.css';
+import DefaultProfilePic from '../../assets/images/DefaultProfilePic.png'
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -85,6 +86,18 @@ const Signup = () => {
 
     // If no errors, proceed with form submission
     try {
+      const generateImageKey = (): string => {
+        return `User-ProfilePic-${Date.now()}`;
+      };
+    
+      const setImageToLocalStorage = () => {
+        const key = generateImageKey();
+        localStorage.setItem(key, DefaultProfilePic);
+        return key;
+      };
+
+      const profilePictureKey = setImageToLocalStorage();
+
       const response = await fetch('http://localhost:3000/users', {
         method: 'POST',
         headers: {
@@ -93,7 +106,8 @@ const Signup = () => {
         body: JSON.stringify({
           username: username,
           email: formData.email,
-          password: formData.password
+          password: formData.password,
+          profilePicture: profilePictureKey 
         })
       });
   
@@ -101,7 +115,6 @@ const Signup = () => {
         throw new Error('Failed to create user');
       }
   
-      // Redirect to login page after successful user creation
       window.location.href = '/login';
   
     } catch (error) {

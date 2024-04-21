@@ -5,16 +5,52 @@ import ChangeProfilePicture from './ChangeProfilePicture';
 
 
 interface ProfileSettingsProps {
-  onClose: () => void; // Define the type of onClose prop
+  onClose: () => void; 
 }
 
 const ProfileSettings: React.FC<ProfileSettingsProps> = ({onClose}) => {
 
   const [ChangePasswordVisible,setChangePasswordVisible] = useState(false);
   const [ChangeProfilePicVisible,setChangeProfilePicVisible] = useState(false);
+  const [userData, setUserData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+  });
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setUserData({ ...userData, [name]: value });
+  };
+
+  const handleSave = async () => {
+    try {
+
+      const userId = localStorage.getItem('UserId');
+      const username = `${userData.firstName.trim()} ${userData.lastName.trim()}`;
+      const updatedUserData = {
+        username,
+        email: userData.email, // Removed .trim()
+      };
+
+      const response = await fetch(`http://localhost:3000/users/posodobitev/${userId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedUserData),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to update user details');
+      }
+      
+      handleCancel();
+    } catch (error: any) {
+      console.error('Error updating user details:', error.message);
+    }
+  };
 
   const handleCancel = () => {
-    // Call the onClose function passed from the parent component
     if (onClose) {
       onClose();
     }
@@ -45,20 +81,23 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({onClose}) => {
           <div className="profile-settings-window">
             <div className="profile-settings">
               <h2>Edit Profile</h2>
-              <form>
+              <form onSubmit={handleSave}>
                 <div className='form-row'>
                   <div className="form-group">
                     <label htmlFor="firstName">Name:</label>
-                    <input type="text" id="firstName" name="firstName" />
+                    <input type="text" id="firstName" name="firstName" value={userData.firstName}
+                      onChange={handleInputChange}/>
                   </div>
                   <div className="form-group">
                     <label htmlFor="lastName">Surname:</label>
-                    <input type="text" id="lastName" name="lastName" />
+                    <input type="text" id="lastName" name="lastName" value={userData.lastName}
+                      onChange={handleInputChange}/>
                   </div>
                 </div>
                 <div className="form-group">
                   <label htmlFor="email">Email:</label>
-                  <input type="email" id="email" name="email" />
+                  <input type="email" id="email" name="email" value={userData.email}
+                    onChange={handleInputChange}/>
                 </div>
                 <div className='linksContainer'>
                   <a className='changePassword' onClick={handleChangePasswordClick}>Change password</a>
@@ -66,7 +105,7 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({onClose}) => {
                 </div>
                 <div className="button-container">
                   <button className="cancel-button" onClick={handleCancel}>Cancel</button>
-                  <button className="save-button">Save</button>
+                  <button className="save-button" type="submit">Save</button>
                 </div>
               </form>
             </div>

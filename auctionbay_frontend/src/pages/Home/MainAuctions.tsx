@@ -38,25 +38,8 @@ const MainAuctions = () => {
     }
     
     try {
-      const response = await fetch('http://localhost:3000/decode', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          token: token
-        })
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to decode token');
-      }
-      
-      const userData = await response.json();
-
-      const userId = userData.id;
-
-      //localStorage.setItem('UserId', userId);
+     
+      const userId = localStorage.getItem('UserId');
 
   
       const auctionsResponse = await fetch(`http://localhost:3000/auctions/akcije/${userId}`);

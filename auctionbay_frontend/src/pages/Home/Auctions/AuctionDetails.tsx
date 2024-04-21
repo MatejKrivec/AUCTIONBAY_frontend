@@ -21,12 +21,19 @@ interface Bid {
   bidId: number;
   userId: number;
   amount: number;
+  bidDateTime:   Date;
 }
 
+interface User {
+  id: number;
+  username: string;
+  profilePicture: string;
+}
 
 const AuctionDetails = ({ auction }: AuctionDetailsProps) => {
   const [bidAmount, setBidAmount] = useState<number>(0);
   const [bids, setBids] = useState<Bid[]>([]);
+  const [users, setUsers] = useState<{ [key: number]: User }>({});
 
   useEffect(() => {
     fetchBids();
@@ -39,8 +46,20 @@ const AuctionDetails = ({ auction }: AuctionDetailsProps) => {
       if (!response.ok) {
         throw new Error('Failed to fetch bids');
       }
-      const data = await response.json();
-      setBids(data);
+      const bidData: Bid[] = await response.json(); // Define bidData properly
+      setBids(bidData);
+
+      // Fetch user data for each bid
+      const userIds = bidData.map((bid: Bid) => bid.userId);
+      const usersData: { [key: number]: User } = {};
+      for (const userId of userIds) {
+        const userResponse = await fetch(`http://localhost:3000/users/${userId}`);
+        if (userResponse.ok) {
+          const userData: User = await userResponse.json();
+          usersData[userId] = userData;
+        }
+      }
+      setUsers(usersData);
     } catch (error) {
       console.error('Error fetching bids:', error);
     }
@@ -105,9 +124,13 @@ const AuctionDetails = ({ auction }: AuctionDetailsProps) => {
         <div className="bids">
           <h2>Bids</h2>
           <ul>
-          {bids.map((bid) => (
-          <li key={bid.bidId}>{`Bid by User ${bid.userId}: $${bid.amount}`}</li>
-        ))}
+            {bids.map((bid) => (
+              <li key={bid.bidId}>
+                <img src={getImageFromLocalStorage(users[bid.userId]?.profilePicture || '')} alt="User Profile" />
+                {`${users[bid.userId]?.username || `User ${bid.userId}`} on ${new Date(bid.bidDateTime).toLocaleString()}: $${bid.amount}`}
+                
+              </li>
+            ))}
           </ul>
         </div>
       </div>

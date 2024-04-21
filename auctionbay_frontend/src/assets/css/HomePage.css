@@ -47,9 +47,10 @@
 }
 
 .ProfilePicture {
-   height: 60px;  
-   width: 60px;
+   max-height: 60px;  
+   max-width: 60px;
    cursor: pointer;
+   border-radius: 50px;
 
 }
 .ProfileEditBtn {

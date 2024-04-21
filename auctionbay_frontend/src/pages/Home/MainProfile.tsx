@@ -6,22 +6,19 @@ import Won from './Profile/Won';
 
 
 
-const MainProfile = () => {
+const MainProfile = ({ username }: { username: string }) => {
     const [selectedOption, setSelectedOption] = useState('option1');
-    const [username, setUsername] = useState('');
 
     const handleChange = (option: React.SetStateAction<string>) => {
       setSelectedOption(option);
     };
 
-    const handleUsernameReceived = (username: string) => {
-      setUsername(username);
-    };
+
   
     const renderContent = () => {
       switch (selectedOption) {
         case 'option1':
-          return <MyAuctions onUsernameReceived={handleUsernameReceived}/>;
+          return <MyAuctions/>;
         case 'option2':
           return <Bidding/>;
         case 'option3':

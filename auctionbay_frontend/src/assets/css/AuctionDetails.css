@@ -69,6 +69,23 @@
   border: 1px solid black;
   border-radius: 20px;
 }
+.bids ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.bids li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.bids li img {
+  width: 50px; /* Adjust the width as needed */
+  height: auto;
+  margin-right: 10px;
+  border-radius: 50%; /* Optional: make the images circular */
+}
 
 
 
