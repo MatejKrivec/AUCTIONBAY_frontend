@@ -1,95 +1,190 @@
+/* General container styles */
 .auction-details-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch; /* Stretch items to match container height */
+  position: relative;
+  height:80vh;
+  width:auto;
+}
+
+.status {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.image-container {
-  flex: 1;
-  border: 1px solid black;
-  height: 78vh;
-  
-  border-radius: 20px;
-  margin-right: 1%;
-  margin-left: 1%;
-  margin-top: 1%;
-  overflow: hidden;
-}
-
-.image-container img {
-  width: 100%;
-  height: 100%;;
-}
-
-.details-container {
-  flex: 1;
-  
-  height: 78vh;
-  display: block;
-  justify-content: space-around;
-
-  margin-right: 1%;
-  margin-top: 1%;
-  
-}
-
 .auctionTitle{
-  margin: 0;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
-.BidParagraph,
-.StatusParagraph,
-.TimeParagraph{
-  margin: 1%;
+.AuctionDescription{
+  margin-top: 5px;
 }
 
 .placeBidContainer{
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
+  margin-bottom: 1%;
 }
 
-.description {
-  padding: 1%;
-  height: 34%;
-  border: 1px solid black;
+.BidAmountInput{
+  width: 10%;
   border-radius: 20px;
-  align-self: flex-start;
+  margin-left: 1%;
 }
 
-.PlaceBidBtn{
+/* Place bid button */
+.PlaceBidBtn {
   background-color: rgb(244, 255, 39);
   border-radius: 20px;
   margin-left: 1%;
 }
 
-.bids{
-  padding: 1%;
-  margin-top: 1%;
-  height: 58.5%;
-  border: 1px solid black;
+
+/* Close button wrapper */
+.close-button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
   border-radius: 20px;
-}
-.bids ul {
-  list-style-type: none;
-  padding: 0;
+  width: 100%; /* Stretch button wrapper to the whole screen with margin */
+  margin: 10px; /* Add margin */
+  position: relative;
+
 }
 
-.bids li {
+/* Close button */
+.close-button {
+  background-color: #f2f2f2; /* Change background color to gray */
+  width: 99%;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+/* Image container */
+.image-container {
+  flex: 1;
+  max-height: 100%; /* Added max-height */
+  border-radius: 20px;
+  margin-right: 1%;
+  margin-left: 1%;
+  margin-top: 1%;
+  overflow: hidden;
+  background-color: #f2f2f2;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Maintain aspect ratio */
+}
+
+/* Details container */
+.details-container {
+  flex: 1;
+  display: flex; /* Use flexbox */
+  flex-direction: column; /* Stack items vertically */
+  margin-right: 1%;
+  margin-top: 1%;
+}
+
+/* Description */
+.description {
+  flex: 1; /* Expand to fill available space */
+  max-height: 30%; /* Added max-height */
+  padding: 1%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  background-color: #f2f2f2;
+  overflow: hidden;
+}
+
+/* Bids */
+.bids {
+  flex: 1; /* Expand to fill available space */
+  max-height: 70%; /* Added max-height */
+  padding: 1%;
+  margin-top: 1%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  background-color: #f2f2f2;
+  overflow-y: auto;
+}
+
+/* CSS */
+
+ul{
+  list-style-type: none;
+}
+.bid-info {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  padding: 0.5em;
+}
+
+.imageANDname {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  align-items: center;
+}
+
+.date-amount {
+  display: flex;
+  align-items: center;
+  text-align: right;
 }
 
 .bids li img {
-  width: 50px; /* Adjust the width as needed */
+  width: 80px; /* Adjust the width as needed */
   height: auto;
   margin-right: 10px;
   border-radius: 50%; /* Optional: make the images circular */
 }
 
 
+.bids li .date-amount .amount {
+  background-color: yellow;
+  width: 40px;
+  padding: 5px;
+  border-radius: 20px;
+  font-weight: bold;
+  margin-left: 10px;
+}
 
 
 
-/* Additional styling can be added as needed */
 
+/* Auction status */
+.StatusAuction.winningStatus {
+  background-color: greenyellow;
+  color: black;
+  font-size: medium;
+  padding: 1%;
+  border-radius: 20px;
+}
+
+.StatusAuction.outbidStatus {
+  background-color: lightcoral;
+  color: black;
+  padding: 1%;
+  border-radius: 20px;
+}
+
+/* Time paragraph */
+.TimeParagraph.red {
+  background-color: lightcoral; /* Adjust color as needed */
+  color: black;
+  padding: 1%;
+  border-radius: 20px;
+}

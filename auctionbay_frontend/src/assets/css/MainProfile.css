@@ -1,3 +1,18 @@
+.main {
+    padding: 20px;
+  }
+  
+  .HelloUserText {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .auctionsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
 .OptionBtns {
     display: flex;
     justify-content: center;
@@ -8,7 +23,7 @@
     align-self: center;
     justify-content: center;
     background-color: lightcyan;
-    padding: 1%;
+    padding: 0.5%;
     border-radius: 50px;
     width: fit-content;
 }
@@ -18,7 +33,7 @@
 }
 
 .ContentOptions button.active {
-    background-color: black; /* Set the background color for the active button */
+    background-color: black; 
     color: white;
     border-radius: 20px;
   }
@@ -38,3 +53,11 @@
     justify-content: center;
     align-self: center;
 }
+
+.HelloUserTextContainer{
+    display: flex;
+    margin: 0;
+    margin-bottom: 0;
+}
+
+

@@ -20,7 +20,7 @@
 }
 
 .logo {
-  width: 70px; /* Set the width of the image */
+  width: 110px; /* Set the width of the image */
   height: auto; /* Maintain aspect ratio */
 }
 
@@ -64,6 +64,9 @@
 }
 
 
+.link{
+  color: gray;
+}
 
 
 .footer {

@@ -124,7 +124,7 @@ const Signup = () => {
 
   return (
     <div className="flex-container">
-      <div className='visual'>
+      <div className='visualContainer'>
         <img src='src\assets\images\presentacija2.png' alt='presentacija' className='presentacija'/>
       </div>
       <div className='form'>
@@ -137,28 +137,28 @@ const Signup = () => {
           <div className="form-row">
             <div className="form-group">
               <label htmlFor="username" className="label">Name</label>
-              <input type="text" className="formUsername" id="username" name="username" onChange={handleChange} required />
+              <input type="text" className="formUsername" id="username" placeholder='name' name="username" onChange={handleChange} required />
               {errors.username && <p className="error">{errors.username}</p>}
             </div>
             <div className="form-group">
               <label htmlFor="surname" className="label">Surname</label>
-              <input type="text" className="formUsername" id="surname" name="surname" onChange={handleChange} required />
+              <input type="text" className="formUsername" id="surname" name="surname" placeholder='surname' onChange={handleChange} required />
               {errors.surname && <p className="error">{errors.surname}</p>}
             </div>
           </div>
           <div className="form-group">
             <label htmlFor="email" className="label">E-mail</label>
-            <input type="email" className="form-control" id="email" name="email" onChange={handleChange} required />
+            <input type="email" className="form-control" id="email" name="email" placeholder='email' onChange={handleChange} required />
             {errors.email && <p className="error">{errors.email}</p>}
           </div>
           <div className="form-group">
             <label htmlFor="password" className="label">Password</label>
-            <input type="password" className="form-control" id="password" name="password" onChange={handleChange} required />
+            <input type="password" className="form-control" id="password" name="password" placeholder='password' onChange={handleChange} required />
             {errors.password && <p className="error">{errors.password}</p>}
           </div>
           <div className="form-group">
             <label htmlFor="repeatPassword" className="label">Repeat Password</label>
-            <input type="password" className="form-control" id="repeatPassword" name="repeatPassword" onChange={handleChange} required />
+            <input type="password" className="form-control" id="repeatPassword" name="repeatPassword" placeholder='repeat password' onChange={handleChange} required />
             {errors.repeatPassword && <p className="error">{errors.repeatPassword}</p>}
           </div>
           <button type="submit" className="btnSubmitSignup">Signup</button>

@@ -1,60 +1,80 @@
-.auctionsContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-  
-  .auctionItem {
-    background-color: #f2f2f2;
-    padding: 20px;
-    border-radius: 5px;
-    width: 15%;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    height: 300px;
-  }
-  
-  .status {
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .timeRemaining {
-    font-style: italic;
-    margin-bottom: 10px;
-  }
-  
-  .name {
-    font-weight: bold;
-  }
-  
-  .price {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
+.uniqueAuctionItem {
+  background-color: #f2f2f2;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  width: 15rem;
+  height: 18rem;
+}
 
-  .ImageContainer{
-    width: 100%;
-    height: 200px;
-    background-color: #f2f2f2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .imagePic {
-    background-color: pink;
-    width: 90%;
-    height: 90%;
-    border-radius: 5px;
-  }
+.uniqueStatus {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 300;
+}
+
+.uniqueTimeParagraph {
+  font-style: italic;
+  font-size: 10px;
+}
+
+.uniqueName {
+  font-weight: 300;
+  font-size: 14px;
+  margin-bottom: 3%;
+}
+
+.uniquePrice {
+  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.uniqueImage {
+  width: 100%;
+  height: 58%;
+  object-fit: cover;
+}
+
+.uniqueAuctionStatus {
+  border-radius: 10px;
+  padding: 2px 6px;
+  font-size: 10px;
+}
+
+.uniqueInProgressStatus {
+  background-color: yellow;
+}
+
+.uniqueWinningStatus {
+  background-color: greenyellow;
+  color: black;
+  padding: 2%;
+  border-radius: 20px;
+  font-size: 10px;
+}
+
+.uniqueTimeParagraph.uniqueRed {
+  background-color: lightcoral; /* Adjust color as needed */
+  color: black;
+  padding: 2%;
+  border-radius: 10px;
+}
 
 
-  /* AUCTION ITEM */
-  .imagee {
-    width: 90%; 
-    height: 90%; 
-    object-fit: cover; 
-  }
-  
+
+
+
+
+
+
+/* /////////////////////////// */
+
+
+
+
+
+
+
+
+

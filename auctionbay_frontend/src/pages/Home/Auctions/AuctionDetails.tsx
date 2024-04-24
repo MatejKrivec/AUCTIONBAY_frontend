@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../../../assets/css/AuctionDetails.css';
+import { useNavigate } from 'react-router-dom';
 
 interface Auction {
   auctionId: number;
@@ -15,6 +16,8 @@ interface Auction {
 
 interface AuctionDetailsProps {
   auction: Auction;
+  currentPrice: number; // Add current price prop
+  onClose: () => void;
 }
 
 interface Bid {
@@ -30,27 +33,47 @@ interface User {
   profilePicture: string;
 }
 
-const AuctionDetails = ({ auction }: AuctionDetailsProps) => {
+const AuctionDetails = ({ auction, currentPrice, onClose }: AuctionDetailsProps) => {
   const [bidAmount, setBidAmount] = useState<number>(0);
   const [bids, setBids] = useState<Bid[]>([]);
   const [users, setUsers] = useState<{ [key: number]: User }>({});
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [winningStatus, setWinningStatus] = useState<string>('');
+
+  // Define state for currentPrice and its setter function
+  const [updatedCurrentPrice, setUpdatedCurrentPrice] = useState<number>(currentPrice);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
+    setBidAmount(updatedCurrentPrice); // Use updatedCurrentPrice instead of currentPrice
     fetchBids();
-  }, []);
+  }, [auction.auctionId, updatedCurrentPrice]); // Listen for changes in updatedCurrentPrice
 
   const fetchBids = async () => {
     try {
-      
-      const response = await fetch(`http://localhost:3000/bids/${auction.auctionId}`);
+      const response = await fetch(`http://localhost:3000/bids/byAuctionId/${auction.auctionId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch bids');
       }
       const bidData: Bid[] = await response.json(); // Define bidData properly
-      setBids(bidData);
+      
+      // Sort bids by the highest amount to lowest
+      const sortedBids = [...bidData].sort((a, b) => b.amount - a.amount);
+      setBids(sortedBids);
+
+      if (sortedBids.length > 0) {
+        const highestBid = sortedBids[0]; // Get the first bid after sorting
+        const userId = localStorage.getItem('UserId');
+        if (userId && parseInt(userId, 10) === highestBid.userId) {
+          setWinningStatus('Winning');
+        } else {
+          setWinningStatus('Outbid');
+        }
+      }
 
       // Fetch user data for each bid
-      const userIds = bidData.map((bid: Bid) => bid.userId);
+      const userIds = sortedBids.map((bid: Bid) => bid.userId);
       const usersData: { [key: number]: User } = {};
       for (const userId of userIds) {
         const userResponse = await fetch(`http://localhost:3000/users/${userId}`);
@@ -64,77 +87,137 @@ const AuctionDetails = ({ auction }: AuctionDetailsProps) => {
       console.error('Error fetching bids:', error);
     }
   };
-  
+
+  const getTimeRemainingString = () => {
+    if (new Date() > new Date(auction.endTime)) {
+      return ''; // Auction is done, display nothing
+    } else {
+      const timeDiffMs = new Date(auction.endTime).getTime() - new Date().getTime();
+      const hoursRemaining = Math.floor(timeDiffMs / (1000 * 60 * 60)); // Convert milliseconds to hours
+
+      if (hoursRemaining < 24) {
+        return `${hoursRemaining}h`;
+      } else if (hoursRemaining < 48) {
+        return '1 day';
+      } else {
+        const daysRemaining = Math.ceil(hoursRemaining / 24);
+        return `${daysRemaining} days`;
+      }
+    }
+  };
+
   const getImageFromLocalStorage = (key: string) => {
-    
     const image = localStorage.getItem(key);
     return image ? image : ''; 
   };
 
   const handlePlaceBid = async () => {
-
     const userId = localStorage.getItem('UserId') ?? "404";
     const datetime = new Date();
 
+    if (bidAmount <= updatedCurrentPrice) { // Use updatedCurrentPrice instead of currentPrice
+      setErrorMessage('Bid amount must be higher than the current price.');
+      return;
+    }
+
+    setErrorMessage('');
+
     try {
-      const response = await fetch('http://localhost:3000/bids', {
+      const patchResponse = await fetch(`http://localhost:3000/auctions/${auction.auctionId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          price: bidAmount // Update price with the new bid amount
+        })
+      });
+
+      if (!patchResponse.ok) {
+        throw new Error('Failed to update auction price');
+      }
+
+      const bidResponse = await fetch('http://localhost:3000/bids', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          userId: parseInt(userId, 10), // Change this to the actual user ID
+          userId: parseInt(userId, 10), 
           auctionId: auction.auctionId,
-          itemId: 456, // Change this to the actual item ID
+          itemId: 456,
           amount: bidAmount,
           bidDateTime: datetime.toISOString()
         })
       });
 
-      if (!response.ok) {
+      if (!bidResponse.ok) {
         throw new Error('Failed to place bid');
       }
 
-      // Optionally, you can handle success and update the UI
       console.log('Bid placed successfully');
+
+      // Update the current price state with the new bidAmount
+      setUpdatedCurrentPrice(bidAmount);
+      setBidAmount(bidAmount);
+      fetchBids();
     } catch (error) {
       console.error('Error placing bid:', error);
     }
   };
 
+  const getStatus = () => {
+    return winningStatus ; 
+  };
+
   return (
-    <div className="auction-details-container">
-      <div className="image-container">
-        <img src={getImageFromLocalStorage(auction.image)} alt="Auction Item" className='auctionImage' />
+    <>
+      <div className="close-button-wrapper">
+        <button className="close-button" onClick={onClose}>Close</button>
       </div>
-      <div className="details-container">
-        <div className="description">
-          <div className='status'>
-              <p className='StatusParagraph'>status</p>
-              <p className='TimeParagraph'>time</p>
+      <div className="auction-details-container">
+        <div className="image-container">
+          <img src={getImageFromLocalStorage(auction.image)} alt="Auction Item" className='auctionImage' />
+        </div>
+        <div className="details-container">
+          <div className="description">
+            <div className='status'>
+              <p className={`StatusAuction ${getStatus() === 'Winning' ? 'winningStatus' : 'outbidStatus'}`}>{getStatus()}</p>
+              <p className={`TimeParagraph ${getTimeRemainingString().includes('h') ? 'red' : ''}`}>
+                {getTimeRemainingString()}
+                <i className='fas fa-clock' style={{ marginLeft: '5px' }}></i>
+              </p>
+            </div>
+            <h2 className='auctionTitle'>{auction.name}</h2>
+            <p className='AuctionDescription'>{auction.description}</p>
+            <div className='placeBidContainer'>
+              <p className='BidParagraph'>Bid: </p>
+              <input type="number" className='BidAmountInput' value={bidAmount} onChange={(e) => setBidAmount(parseInt(e.target.value))} />
+              <button className='PlaceBidBtn' onClick={handlePlaceBid} disabled={bidAmount <= updatedCurrentPrice}>Place bid</button>
+            </div>
           </div>
-          <h2 className='auctionTitle'>{auction.name}</h2>
-          <p>{auction.description}</p>
-          <div className='placeBidContainer'>
-            <p className='BidParagraph'>Bid: </p>
-            <input type="number" className='BidAmountInput' value={bidAmount} onChange={(e) => setBidAmount(parseInt(e.target.value))} />
-            <button className='PlaceBidBtn' onClick={handlePlaceBid}>Place bid</button>
+          <div className="bids">
+            <h2>{`Bidding history(${bids.length})`}</h2>
+            <ul>
+              {bids.map((bid) => (
+                <li key={bid.bidId}>
+                  <div className="bid-info">
+                    <div className='imageANDname'>
+                      <img src={getImageFromLocalStorage(users[bid.userId]?.profilePicture || '')} alt="User Profile" />
+                      <p>{users[bid.userId]?.username || `User ${bid.userId}`}</p>
+                    </div>
+                    <div className="date-amount">
+                      <p>{new Date(bid.bidDateTime).toLocaleString()}</p>
+                      <p className="amount">${bid.amount}</p>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-        <div className="bids">
-          <h2>Bids</h2>
-          <ul>
-            {bids.map((bid) => (
-              <li key={bid.bidId}>
-                <img src={getImageFromLocalStorage(users[bid.userId]?.profilePicture || '')} alt="User Profile" />
-                {`${users[bid.userId]?.username || `User ${bid.userId}`} on ${new Date(bid.bidDateTime).toLocaleString()}: $${bid.amount}`}
-                
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -74,7 +74,7 @@ const HomePage= () => {
             );
         } else if (activeTab === 'auctions') {
             return (
-                <MainAuctions />
+                <MainAuctions/>
             );
         }
     };
@@ -120,9 +120,9 @@ const HomePage= () => {
             {renderContent()}
             
             {IsLogOutVisible && (<LogOut handleProfileSettingsClosee={handleSettingsClose}/>)}
-            <footer className="footer">
+          {/*<footer className="footer">
                 <p>@Matej-Krivec-Skill-Up-Mentor</p>
-            </footer>
+            </footer>*/}  
         </div>
     )
 }

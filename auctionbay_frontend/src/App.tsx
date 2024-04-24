@@ -26,6 +26,8 @@ import ChangePassword from './pages/Home/ProfileSettings/ChangePassword';
 import ChangeProfilePicture from './pages/Home/ProfileSettings/ChangeProfilePicture';
 import LogOut from './pages/Home/ProfileSettings/LogOut';
 import ProfileSettings from './pages/Home/ProfileSettings/ProfileSettings';
+import ProtectedRoute from './ProtectedRoute';
+//import ProtectedRoute from './ProtectedRoute';
 
 
 function App() {
@@ -37,29 +39,41 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ResetPassword />} />
 
-        {/* Protected routes */}
-        <Route  element={<RouteGuard children={<HomePage/>} />}>
-          {/* Define nested routes here */}
-          <Route path="/me" element={<HomePage />} />
-          <Route path="auctions" element={<MainAuctions />} />
-          <Route path="auction" element={<AddAuction handleCancelAddClick={() => {}} />} />
-          <Route path="auction/:id" element={<EditAuction handleCancleEditClick={() => {}} />} />
-          <Route path="auctions/:id/bid" element={<AuctionDetails />} />
-          <Route path="update-password" element={<ChangePassword onClose={() => {}} />} />
-          <Route path="settings" element={<ProfileSettings onClose={() => {}} />} >
-            <Route path="change-profile-picture" element={<ChangeProfilePicture onClose={() => {}} />} />
-            <Route path="log-out" element={<LogOut handleProfileSettingsClosee={() => {}} />} />
-          </Route>
-        </Route>
 
-        {/* Redirect to login if not logged in */}
-        <Route path="/*" element={<Navigate to="/login" />} />
+        <Route element={<RouteGuard  />}>
+          <Route path="/me" element={<HomePage />} />
+        </Route> 
+        
+
+      {
+      /*
+      <ProtectedRoute path="/me" component={HomePage} />
+      
+      <Route path='/me' element={<HomePage/>}></Route>
+
+        <Route path='/me/auction' element={<AddAuction handleCancelAddClick={function (): void {
+          throw new Error('Function not implemented.');
+        } }/>}></Route>
+
+        <Route path='/me/auction/:id' element={<EditAuction handleCancleEditClick={function (): void {
+          throw new Error('Function not implemented.');
+        } } imageKey={null} auctionId={null}/>}></Route>
+        
+        <Route path='/me/update-password' element={<ChangePassword onClose={function (): void {
+          throw new Error('Function not implemented.');
+        } }/>}></Route>
+*/}  
+      {/* <Route path='/auctions/:id/bid' element={<AuctionDetails auction={undefined} currentPrice={0} onClose={function (): void {
+          throw new Error('Function not implemented.');
+        } }/>}></Route>*/}  
+
+        <Route path='/auctions' element={<MainAuctions/>}></Route>
       </Routes>
     </Router>
   );
 }
 
-function RouteGuard({ children }: { children: React.ReactNode }) {
+function RouteGuard() {
 
   const isLoggedIn = !!localStorage.getItem('token');
 
@@ -67,7 +81,7 @@ function RouteGuard({ children }: { children: React.ReactNode }) {
     return <Navigate to="/login" />;
   }
 
-  return <>{children}</>;
+  return <>{<HomePage></HomePage>}</>;
 }
 
 export default App;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../assets/css/MainAuctions.css';
 import AuctionDetails from './Auctions/AuctionDetails'; // Import the AuctionDetails component
 import AuctionItem from './Auctions/AuctionItem';
+import { useNavigate } from 'react-router-dom';
 
 /*interface ImageData {
   type: string;
@@ -20,8 +21,6 @@ interface Auction {
   endTime: string;
 }
 
-
-
 const MainAuctions = () => {
   const [auctions, setAuctions] = useState<Auction[]>([]);
   const [selectedAuction, setSelectedAuction] = useState<Auction | null>(null); 
@@ -29,6 +28,14 @@ const MainAuctions = () => {
   useEffect(() => {
     fetchAuctions();
   }, []);
+
+  const handleAuctionClick = (auction: Auction) => {
+    setSelectedAuction(auction); 
+  };
+
+  const handleCloseAuctionDetails = () => {
+    setSelectedAuction(null); 
+  };
 
   const fetchAuctions = async () => {
     const token = localStorage.getItem('token');
@@ -49,7 +56,14 @@ const MainAuctions = () => {
       const auctionsData = await auctionsResponse.json();
 
       const auctionsArray = Array.isArray(auctionsData) ? auctionsData : [auctionsData];
-      setAuctions(auctionsArray);
+
+      // Filter out auctions whose endTime has already passed
+      const filteredAuctions = auctionsArray.filter(auction => new Date(auction.endTime) > new Date());
+
+      // Sort by endTime
+      filteredAuctions.sort((a, b) => new Date(a.endTime).getTime() - new Date(b.endTime).getTime());
+      
+      setAuctions(filteredAuctions);
 
 
     } catch (error) {
@@ -57,18 +71,13 @@ const MainAuctions = () => {
     }
   };
 
-
-  const handleAuctionClick = (auction: Auction) => {
-    setSelectedAuction(auction); 
-  };
-
   return (
     <div>
       {selectedAuction ? (
-        <AuctionDetails auction={selectedAuction}  />
+        <AuctionDetails auction={selectedAuction}  currentPrice={selectedAuction.price} onClose={handleCloseAuctionDetails}/>
       ) : (
         <div className='main'>
-          <div className='HelloUserText'>
+          <div className='AuctionsText'>
             <h1>Auctions</h1>
           </div>
           <div className='auctionsContainer'>

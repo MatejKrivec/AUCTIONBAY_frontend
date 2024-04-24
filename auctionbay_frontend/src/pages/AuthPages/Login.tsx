@@ -25,8 +25,6 @@ const Login = () => {
     e.preventDefault();
   
     try {
-      //console.log('Form Data:', formData);
-
       const response = await fetch('http://localhost:3000/auth/login', {
         method: 'POST',
         headers: {
@@ -45,28 +43,24 @@ const Login = () => {
       // Store the token in local storage
       localStorage.setItem('token', token);
 
-
-
       //console.log('Stored token:', token);
       try {
-        // Make a GET request to the protected route to trigger authentication
         const response = await fetch('http://localhost:3000/auth/protected', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}` // Include JWT token in the Authorization header
+            'Authorization': `Bearer ${token}` 
           }
           
-        });
-        //console.log('Bearer token:', `Bearer ${token}`);
+        });;
         if (!response.ok) {
-          throw new Error('Failed to authenticate'); // Handle authentication failure
+          throw new Error('Failed to authenticate'); 
         }
       
         // If the request is successful, navigate to the /me route
         //navigate('/me');
         const responseData = await response.json();
-      navigate('/'+responseData.route); // Assuming responseData contains the route to navigate to
+        navigate('/'+responseData.route); 
       
       } catch (error) {
         console.error('Error authenticating:', error);
@@ -79,7 +73,7 @@ const Login = () => {
 
   return (
     <div className="flex-container">
-      <div className='visual'>
+      <div className='visualContainer'>
         <img src='src\assets\images\presentacija2.png' alt='presentacija' className='presentacija'/>
       </div>
       <div className='form'>
@@ -91,13 +85,14 @@ const Login = () => {
         <form className='LoginForm' onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username" className="label">Username</label>
-            <input type="text" className="form-control" id="username" name="username" onChange={handleChange} required/>
+            <input type="text" className="form-control" id="username" name="username" placeholder='username' onChange={handleChange} required/>
           </div>
           <div className="form-group">
             <label htmlFor="password" className="label">Password</label>
-            <input type="password" className="form-control" id="password" name="password" onChange={handleChange} required/>
+            <input type="password" className="form-control" id="password" name="password" placeholder='password' onChange={handleChange} required></input>
+
           </div>
-          <Link className="link" to="/ForgotPassword">Forgot password?</Link>
+          <Link className="link" to="/forgot-password">Forgot password?</Link>
           <button type="submit" className="btn btn-primary">Login</button>
         </form>
         <p className='paragraph'>Don't have an account? <Link className='LoginToSignupLink' to="/signup">Sign up</Link></p>

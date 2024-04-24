@@ -18,7 +18,7 @@ const InitPage = () => {
     <div className="introPage">
       <header className="header">
         <div className="logoContainer">
-          <img src="src\assets\images\logo.png" alt="Logo" className="logo" />
+          <img src="src\assets\images\AU_logo.png" alt="Logo" className="logo" />
         </div>
         <div className="authOptions">
           <button className="loginButton" onClick={LoginBtnClick}>Login</button>

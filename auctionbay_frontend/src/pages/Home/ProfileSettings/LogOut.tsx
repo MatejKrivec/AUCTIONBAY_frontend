@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import ProfileSettings from './ProfileSettings';
+import { Navigate, useNavigate } from 'react-router-dom';
+
 
 
 const LogOut = ({handleProfileSettingsClosee}:{handleProfileSettingsClosee: () => void}) => {
@@ -15,6 +17,16 @@ const LogOut = ({handleProfileSettingsClosee}:{handleProfileSettingsClosee: () =
           }
       setProfileSettingsVisible(false); 
     };
+
+    const navigate = useNavigate();
+
+    const HandleLogOut = () => {
+
+        localStorage.removeItem('token');
+        localStorage.removeItem('UserId');
+
+        navigate('/');
+    }
     
     return (
         <div>
@@ -25,7 +37,7 @@ const LogOut = ({handleProfileSettingsClosee}:{handleProfileSettingsClosee: () =
                     <div className="LogOut-window">
                         <div className='LogOut'>
                             <a className='LogOutSettingsLink' onClick={handleProfileSettingsToggle}>&#x2699; Profile settings</a>
-                            <button className='LogOutBtn'>Log out</button>
+                            <button className='LogOutBtn' onClick={HandleLogOut}>Log out</button>
                             
                         </div>
                     </div>

@@ -1,39 +1,64 @@
-.auctionsContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-  
-  .auctionItem {
-    background-color: #f2f2f2;
-    padding: 20px;
-    border-radius: 5px;
-    width: 15%;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .status {
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .timeRemaining {
-    font-style: italic;
-    margin-bottom: 10px;
-  }
-  
-  .name {
-    font-weight: bold;
-  }
-  
-  .price {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  .image {
-    width: 100%;
-    border-radius: 5px;
-  }
-  
+.auctionItemContainer {
+  background-color: #f2f2f2;
+  padding: 5px; /* Smaller padding */
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  width: 15rem;
+  height: 18rem;
+}
+
+.statusContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.TimeParagraphItemElement {
+  font-size: 10px; /* Smaller font size */
+}
+
+.nameContainer {
+  font-size: 14px; /* Smaller font size */
+  margin-bottom: 3%;
+}
+
+.price {
+  font-weight: bold;
+  font-size: 5px; /* Smaller font size */
+  margin-bottom: 5px; /* Adjusted margin */
+}
+
+.imagePic {
+  width: 100%;
+  height: 58%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.doneStatus,
+.outbidStatus,
+.winningStatus {
+  border-radius: 20px;
+  font-size: 10px;
+}
+
+.auctionStatus.OutbidStatus {
+  background-color: lightcoral;
+  padding: 2%;
+  color: black;
+}
+
+.auctionStatus.WinningStatus {
+  background-color: greenyellow;
+  border-radius: 20px;
+  padding: 2%;
+  color: black;
+  /* Add any additional styles as needed */
+}
+
+.TimeParagraphItemElement.red {
+  background-color: lightcoral; /* Adjust color as needed */
+  color: black;
+  padding: 2%;
+  border-radius: 10px;
+}

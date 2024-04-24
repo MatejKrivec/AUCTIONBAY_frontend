@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../../assets/css/Bidding.css';
+import BiddingAuctionItem from '../Auctions/BiddingAuctionItem';
+import AuctionItem from '../Auctions/AuctionItem';
 
 interface Auction {
   auctionId: number;
@@ -13,45 +15,50 @@ interface Auction {
   endTime: string;
 }
 
-const AuctionItem = ({ auction }: { auction: Auction }) => {
-  const getStatusString = () => {
-    return 'winning state';
-  };
-
-  const getTimeRemainingString = () => {
-    return 'time';
-  };
-
-  return (
-    <div className='auctionItem'>
-      <div className='status'>
-        <p>{getStatusString()}</p>
-        <p>{getTimeRemainingString()}</p>
-      </div>
-      <div className='name'>{auction.name}</div>
-      <div className='price'>Price: ${auction.price}</div>
-      <img src={auction.image} alt={auction.name} className='image' />
-    </div>
-  );
-};
-
 const Bidding = () => {
-  const [auctions, setAuctions] = useState<Auction[]>([]);
+  const [biddingAuctions, setBiddingAuctions] = useState<Auction[]>([]);
 
   useEffect(() => {
-    fetchAuctions();
+    fetchBiddingAuctions();
   }, []);
 
-  const fetchAuctions = async () => {
+  const fetchBiddingAuctions = async () => {
     try {
-      const response = await fetch('http://localhost:3000/auctions');
-      if (!response.ok) {
-        throw new Error('Failed to fetch data');
+      const userId = localStorage.getItem('UserId');
+      if (!userId) {
+        throw new Error('User ID not found in local storage');
       }
-      const data = await response.json();
-      setAuctions(data);
+
+      // Fetch bids associated with the user's ID
+      const bidsResponse = await fetch(`http://localhost:3000/bids/byUserId/${userId}`);
+      if (!bidsResponse.ok) {
+        throw new Error('Failed to fetch bids');
+      }
+      const bidsData = await bidsResponse.json();
+
+      // Extract unique auction IDs from the bids
+      const auctionIds: number[] = Array.from(new Set(bidsData.map((bid: any) => bid.auctionId)));
+
+      // Fetch auctions corresponding to the auction IDs
+      const auctionsResponse = await Promise.all(
+        auctionIds.map(async (auctionId: number) => {
+          const auctionResponse = await fetch(`http://localhost:3000/auctions/one/${auctionId}`);
+          if (!auctionResponse.ok) {
+            throw new Error(`Failed to fetch auction with ID ${auctionId}`);
+          }
+          return auctionResponse.json();
+        })
+      );
+
+      // Filter out auctions whose endTime has already passed
+      const filteredAuctions = auctionsResponse.filter(auction => new Date(auction.endTime) > new Date());
+
+      filteredAuctions.sort((a, b) => new Date(a.endTime).getTime() - new Date(b.endTime).getTime());
+      
+      // Set the fetched auctions to state
+      setBiddingAuctions(filteredAuctions);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching bidding auctions:', error);
     }
   };
 
@@ -59,8 +66,8 @@ const Bidding = () => {
     <div>
       <main className='main'>
         <div className='auctionsContainer'>
-          {auctions.map((auction) => (
-            <AuctionItem key={auction.auctionId} auction={auction} />
+          {biddingAuctions.map((auction) => (
+            <BiddingAuctionItem key={auction.auctionId} auction={auction} />
           ))}
         </div>
       </main>
@@ -69,4 +76,3 @@ const Bidding = () => {
 };
 
 export default Bidding;
-

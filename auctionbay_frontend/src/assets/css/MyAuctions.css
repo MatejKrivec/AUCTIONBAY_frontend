@@ -1,73 +1,95 @@
-.auctionsContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    
-  }
-  
-  .auctionItem {
-    background-color: #f2f2f2;
-    padding: 20px;
-    border-radius: 5px;
-    width: 15%;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    
-  }
+.auctionItemContainer {
+  background-color: #f2f2f2;
+  padding: 5px; /* Smaller padding */
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  width: 15rem;
+  height: 18rem;
+}
 
-  .addAuctionBtn {
-    background-color: #f2f2f2;
-    padding: 20px;
-    border-radius: 5px;
-    width: 15%;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 340px;
-    height: 340px;
-    font-size: 100px;
-  }
-  
-  .status {
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .timeRemaining {
-    font-style: italic;
-    margin-bottom: 10px;
-  }
-  
-  .name {
-    font-weight: bold;
-  }
-  
-  .price {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  .image {
-    width: 100%;
-    border-radius: 5px;
-  }
+.statusContainer {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 300; /* Thin font weight */
+}
 
-  .buttinsContainer {
-    display: flex;
-    
-  }
+.timeStatusP {
+  font-style: italic;
+  font-size: 10px; /* Smaller font size */
+}
 
-  .deleteBtn {
-    border-radius: 20px;
-    border: 2px solid black;
-    background-color: white;
-    color: black;
-  }
+.nameContainer {
+  font-weight: 300; /* Thin font weight for name */
+  font-size: 14px; /* Smaller font size */
+  margin-bottom: 3%;
+}
 
-  .editBtn {
-    border-radius: 20px;
-    background-color: black;
-    color: white;
-    margin-left: 2%;
-    text-align: center;
-    width: 70%;
-  }
-  
+.price {
+  font-weight: bold;
+  font-size: 15px; /* Smaller font size */
+  margin-bottom: 5px; /* Adjusted margin */
+}
+
+
+.imageWithButtons {
+  width: 100%;
+  height: 50%; /* Adjusted height */
+  object-fit: cover;
+}
+
+.imageWithoutButtons {
+  width: 100%;
+  height: 58%; /* Adjusted height */
+  object-fit: cover;
+}
+
+.doneStatus, .inProgressStatus {
+  border-radius: 10px;
+  padding: 2px 6px; /* Smaller padding */
+  font-size: 10px; /* Smaller font size */
+}
+
+.buttonsContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px; /* Add margin-top instead of margin-bottom */
+}
+
+.deleteBtn {
+  border-radius: 10px;
+  border: 1px solid black; /* Smaller border */
+  background-color: white;
+  color: black;
+  width: 20%; /* Set delete button width */
+  font-size: 10px; /* Smaller font size */
+  margin-right: 2%;
+}
+
+.editBtn {
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+  width: 80%; /* Set edit button width */
+  font-size: 10px; /* Smaller font size */
+}
+
+
+.addAuctionBtn{
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  height: 298px;
+}
+
+/* In Progress status */
+.inProgressStatus {
+  background-color: yellow;
+}
+
+.doneStatus {
+  background-color: black;
+  color: white;
+  border-radius: 20px;
+  font-size: 10px;
+}

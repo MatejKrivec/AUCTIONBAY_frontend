@@ -31,8 +31,8 @@ const MainProfile = ({ username }: { username: string }) => {
     return (
       <div>
         <main className='main'>
-          <div className='HelloUserText'>
-          <h1>Hello {username}!</h1>
+          <div className='HelloUserTextContainer'>
+            <h1 className='HelloUserTitle'>Hello {username}!</h1>
           </div>
           <div className='OptionBtns'>
             <div className='ContentOptions'>

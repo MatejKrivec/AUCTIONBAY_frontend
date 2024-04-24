@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../../assets/css/MyAuctions.css';
 import AddAuction from '../Auctions/AddAuction';
 import EditAuction from '../Auctions/EditAuction';
-import AuctionItem from '../Auctions/MyAuctionItem';
+import MyAuctionItem from '../Auctions/MyAuctionItem';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
 interface Auction {
@@ -14,8 +14,8 @@ interface Auction {
   startingPrice: number;
   maxPrice: number;
   price: number;
-  startTime: string;
-  endTime: string;
+  startTime: Date;
+  endTime: Date;
 }
 
 
@@ -32,7 +32,7 @@ const MyAuctions = () => {
 
   useEffect(() => {
     fetchAuctions();
-  }, []);
+  }, );
 
   const fetchAuctions = async () => {
     try {
@@ -45,6 +45,9 @@ const MyAuctions = () => {
       const auctionsData = await auctionsResponse.json();
 
       const auctionsArray = Array.isArray(auctionsData) ? auctionsData : [auctionsData];
+
+      auctionsArray.sort((a, b) => new Date(b.endTime).getTime() - new Date(a.endTime).getTime());
+
       setAuctions(auctionsArray);
 
 
@@ -58,26 +61,22 @@ const MyAuctions = () => {
   };
 
   const handleEditAuctionClick = (auctionId: number) => {
-    // Set editAuctionVisible to true and also set the image key for the auction being edited
     setEditAuctionVisible(true);
     const auctionToEdit = auctions.find(auction => auction.auctionId === auctionId);
     if (auctionToEdit) {
       setEditImageKey(auctionToEdit.image);
       setEditAuctionId(auctionId);
-    /*  setEditAuctionName(auctionToEdit.name)
-      setEditAuctionDescription(auctionToEdit.description)
-      setEditAuctionEndTime(auctionToEdit.endTime)*/
     }
   };
 
   const handleCancleEditClick = () => {
     setEditAuctionVisible(!editAuctionVisible);
-    window.location.reload();
+    //window.location.reload();
   }
 
   const handleCancleAddClick = () => {
     setAddAuctionVisible(!addAuctionVisible);
-    window.location.reload();
+   // window.location.reload();
   }
 
   const handleDeleteAuctionClick = async (auctionId: number) => {
@@ -90,17 +89,14 @@ const MyAuctions = () => {
         throw new Error('Failed to delete auction');
       }
 
-
-      // Delete the image data from local storage
       const auctionToDelete = auctions.find(auction => auction.auctionId === auctionId);
       if (!auctionToDelete) {
         throw new Error('Auction not found');
       }
       localStorage.removeItem(auctionToDelete.image);
 
-      window.location.reload();
-      // Optionally, you might want to refresh the list of auctions after deletion
-      // Implement your logic here to update the UI accordingly
+     // window.location.reload();
+
     } catch (error) {
       console.error('Error deleting auction:', error);
     }
@@ -113,7 +109,7 @@ const MyAuctions = () => {
         <div className='auctionsContainer'>
           {Array.isArray(auctions) ? (
             auctions.map((auction) => (
-              <AuctionItem key={auction.auctionId} auction={auction} handleEditAuctionClick={handleEditAuctionClick} handleDeleteAuctionClick={handleDeleteAuctionClick}/>
+              <MyAuctionItem key={auction.auctionId} auction={auction} handleEditAuctionClick={handleEditAuctionClick} handleDeleteAuctionClick={handleDeleteAuctionClick}/>
             ))
           ) : (
             <p>No auctions available</p>
