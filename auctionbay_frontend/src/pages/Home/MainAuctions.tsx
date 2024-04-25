@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../../assets/css/MainAuctions.css';
-import AuctionDetails from './Auctions/AuctionDetails'; // Import the AuctionDetails component
+import AuctionDetails from './Auctions/AuctionDetails'; 
 import AuctionItem from './Auctions/AuctionItem';
-import { useNavigate } from 'react-router-dom';
 
-/*interface ImageData {
-  type: string;
-  data: number[]; // Assuming the image data is an array of numbers representing the buffer data
-}*/
 
 interface Auction {
   auctionId: number;
@@ -57,10 +52,8 @@ const MainAuctions = () => {
 
       const auctionsArray = Array.isArray(auctionsData) ? auctionsData : [auctionsData];
 
-      // Filter out auctions whose endTime has already passed
       const filteredAuctions = auctionsArray.filter(auction => new Date(auction.endTime) > new Date());
 
-      // Sort by endTime
       filteredAuctions.sort((a, b) => new Date(a.endTime).getTime() - new Date(b.endTime).getTime());
       
       setAuctions(filteredAuctions);

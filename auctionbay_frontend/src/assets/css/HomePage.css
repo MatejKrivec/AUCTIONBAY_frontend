@@ -50,8 +50,8 @@
 }
 
 .ProfilePicture {
-   height: auto;  
-   max-width: 4em;
+   height: 4em;  
+   width: 4em;
    cursor: pointer;
    border-radius: 50px;
 

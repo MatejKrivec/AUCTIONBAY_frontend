@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../../assets/css/EditProfile.css';
 import ChangePassword from './ChangePassword';
 import ChangeProfilePicture from './ChangeProfilePicture';
@@ -18,6 +18,23 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({onClose}) => {
     email: '',
   });
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userId = localStorage.getItem('UserId');
+      const response = await fetch(`http://localhost:3000/users/${userId}`);
+      const data = await response.json();
+      const [firstName, lastName] = data.username.split(' ');
+
+      setUserData({
+        firstName,
+        lastName,
+        email: data.email,
+      });
+    };
+
+    fetchUserData();
+  }, []);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setUserData({ ...userData, [name]: value });
@@ -30,7 +47,7 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({onClose}) => {
       const username = `${userData.firstName.trim()} ${userData.lastName.trim()}`;
       const updatedUserData = {
         username,
-        email: userData.email, // Removed .trim()
+        email: userData.email, 
       };
 
       const response = await fetch(`http://localhost:3000/users/posodobitev/${userId}`, {
@@ -65,11 +82,13 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({onClose}) => {
   }
 
   const handleChangePasswordClose = () => {
-    setChangePasswordVisible(false); // Close the profile settings window
+    setChangePasswordVisible(false); 
+    onClose()
   };
 
   const handleChangeProfilePictureClose = () => {
-    setChangeProfilePicVisible(false); // Close the profile settings window
+    setChangeProfilePicVisible(false); 
+    onClose()
   };
 
   return (

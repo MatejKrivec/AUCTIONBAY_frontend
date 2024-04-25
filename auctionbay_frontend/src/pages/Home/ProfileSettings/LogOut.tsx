@@ -11,7 +11,7 @@ const LogOut = ({handleProfileSettingsClosee}:{handleProfileSettingsClosee: () =
         setProfileSettingsVisible(!isProfileSettingsVisible);
     };
 
-    const handleProfileSettingsClose = () => {      // Je uporabno ce zelis closati component al pa poslat data iz dva nivoja ali vec nizje
+    const handleProfileSettingsClose = () => {      
         if(handleProfileSettingsClosee){
             handleProfileSettingsClosee();
           }

@@ -4,7 +4,7 @@ import '../../../assets/css/AddAuction.css';
 const AddAuction = ({ handleCancelAddClick }: { handleCancelAddClick: () => void }) => {
   const [imageUploaded, setImageUploaded] = useState(false);
   const [image, setImage] = useState<string | null>(null);
-  const [imageKey, setImageKey] = useState<string | null>(null); // State variable for image key
+  const [imageKey, setImageKey] = useState<string | null>(null); 
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -38,7 +38,7 @@ const AddAuction = ({ handleCancelAddClick }: { handleCancelAddClick: () => void
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
-    const parsedValue = name === 'startingPrice' ? parseFloat(value) : value; // Parse value to number if it's startingPrice
+    const parsedValue = name === 'startingPrice' ? parseFloat(value) : value; 
     setFormData({ ...formData, [name]: parsedValue });
     setFormData({ ...formData, [name]: value });
   };
@@ -84,8 +84,7 @@ const AddAuction = ({ handleCancelAddClick }: { handleCancelAddClick: () => void
         throw new Error('Failed to create auction');
       }
 
-      //console.log('Auction data:', auctionData);
-      // Reset the form after successful submission
+
       setImage(null);
       setImageUploaded(false);
       setFormData({
@@ -102,19 +101,27 @@ const AddAuction = ({ handleCancelAddClick }: { handleCancelAddClick: () => void
     }
   };
 
+  const today = new Date();
+
   return (
     <div className="AddAuction-overlay">
       <div className="AddAuction-window">
         <div className='addAuction'>
           <h2 className='title'>Add auction</h2>
           <div className='imageContainer' >
-            {imageUploaded ? (
-              <>
-                {image && <img src={image} alt="Uploaded image" className='imagePic' />}
-                <button className='deleteImageBtn' onClick={handleDeleteImageClick}><i className='fas fa-trash'></i></button>
-              </>
+          {imageUploaded && image !== null ? (
+                            <>
+                                <div className="imageWrapper">
+                                    <img src={image} alt="Uploaded image" className='imagePicc' />
+                                    <button className='deleteImageBtn' onClick={handleDeleteImageClick}><i className='fas fa-trash'></i></button>
+                                </div>
+                            </>
             ) : (
-              <input className='AddImageInput' type="file" accept="image/jpeg, image/png" onChange={handleAddImageClick} />
+              
+              <label className="UploadPictureBtn">
+                Add image
+                <input className='AddImageInput' type="file" accept="image/jpeg, image/png" onChange={handleAddImageClick} style={{ display: 'none' }}/>
+              </label>
             )}
           </div>
           <form onSubmit={handleStartAuctionSubmit}>
@@ -133,11 +140,11 @@ const AddAuction = ({ handleCancelAddClick }: { handleCancelAddClick: () => void
                 </div>
                 <div className="dateDiv">
                   <label htmlFor="ExpDate">End date</label>
-                  <input type="date" id="ExpDate" name="endTime" value={formData.endTime} onChange={handleInputChange} />
+                  <input type="date" id="ExpDate" name="endTime" value={formData.endTime} onChange={handleInputChange} min={today.toISOString().split('T')[0]}/>
                 </div>
               </div>
             </div>
-            <div className='btnContainer'>
+            <div className='btn-Container'>
               <button className='cancelBtn' onClick={handleCancelAddClick}>Cancel</button>
               <button className='StartAuctionBtn' type='submit'>Start auction</button>
             </div>

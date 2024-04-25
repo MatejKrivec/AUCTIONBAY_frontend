@@ -7,52 +7,73 @@ interface ChangePasswordProps {
 
 
 const ChangePassword: React.FC<ChangePasswordProps> = ({onClose}) => {
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [formData, setFormData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  });
 
-  const handleSave = async () => {
+  const handleChange = (e: { target: { name: any; value: any; }; }) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleSave = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault(); 
     try {
-      if (newPassword !== confirmPassword) {
-        setError('Passwords do not match');
-        return;
+
+      console.log(formData)
+      if (formData.newPassword !== formData.confirmPassword) {
+        console.log('error paswords dont match')
       }
+      else{
+        const userId = localStorage.getItem('UserId');
 
-      const userId = localStorage.getItem('UserId');
 
-      // Make a GET request to validate the current password
-      const response = await fetch(`http://localhost:3000/users/${userId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${currentPassword}`,
-        },
-      });
+        console.log(formData.currentPassword)
 
-      if (!response.ok) {
-        setError('Invalid current password');
-        return;
-      }
-
-      const password = newPassword
-      const updatedPasswordData = {
-        password
-      };
-
-      const updateResponse = await fetch(`http://localhost:3000/users/posodobitev/${userId}`, {
-        method: 'PATCH',
+      const response = await fetch(`http://localhost:3000/users/validatePassword/${userId}`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(updatedPasswordData),
+        body: JSON.stringify({ currentPassword: formData.currentPassword }),
       });
 
-      if (!updateResponse.ok) {
-        throw new Error('Failed to update password');
+      const isPasswordValid = await response.text(); 
+      console.log("Password validation response: " + isPasswordValid);
+
+      if (isPasswordValid === 'false') {
+        console.log('Invalid current password')
+        return;
       }
 
-      handleCancel();
+
+  
+        const password = formData.newPassword
+        const updatedPasswordData = {
+          password
+        };
+  
+        const updateResponse = await fetch(`http://localhost:3000/users/posodobitev/${userId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedPasswordData),
+        });
+  
+        if (!updateResponse.ok) {
+          throw new Error('Failed to update password');
+        }
+  
+        handleCancel();
+      }
+
+      
     } catch (error: any) {
       console.error('Error updating password:', error.message);
     }
@@ -70,25 +91,25 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({onClose}) => {
       <div className="change-password-window">
         <div className='password-settings'>
           <h2>Change Password</h2>
-          <form onSubmit={handleSave}>
+          <form >
             <div className="form-group">
               <label htmlFor="currentPassword">Current Password:</label>
-              <input type="password" id="currentPassword" name="currentPassword" value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}/>
+              <input type="password" id="currentPassword" name="currentPassword" value={formData.currentPassword}
+                onChange={handleChange}/>
             </div>
             <div className="form-group">
               <label htmlFor="newPassword">New Password:</label>
-              <input type="password" id="newPassword" name="newPassword" value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}/>
+              <input type="password" id="newPassword" name="newPassword" value={formData.newPassword}
+                onChange={handleChange}/>
             </div>
             <div className="form-group">
               <label htmlFor="confirmPassword">Confirm New Password:</label>
-              <input type="password" id="confirmPassword" name="confirmPassword" value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}/>
+              <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword}
+                onChange={handleChange}/>
             </div>
             <div className="button-container">
               <button className="cancel-password-button" onClick={handleCancel}>Cancel</button>
-              <button className="save-password-button" type='submit'>Save</button>
+              <button className="save-password-button"  onClick={handleSave}>Save</button>
             </div>
           </form>
         </div>

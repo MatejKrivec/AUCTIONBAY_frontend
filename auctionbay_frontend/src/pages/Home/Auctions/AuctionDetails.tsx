@@ -40,15 +40,16 @@ const AuctionDetails = ({ auction, currentPrice, onClose }: AuctionDetailsProps)
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [winningStatus, setWinningStatus] = useState<string>('');
 
-  // Define state for currentPrice and its setter function
   const [updatedCurrentPrice, setUpdatedCurrentPrice] = useState<number>(currentPrice);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    setBidAmount(updatedCurrentPrice); // Use updatedCurrentPrice instead of currentPrice
+   // if(!auction) return ;
+
+    setBidAmount(updatedCurrentPrice); 
     fetchBids();
-  }, [auction.auctionId, updatedCurrentPrice]); // Listen for changes in updatedCurrentPrice
+  }, [auction.auctionId, updatedCurrentPrice]); 
 
   const fetchBids = async () => {
     try {
@@ -56,14 +57,13 @@ const AuctionDetails = ({ auction, currentPrice, onClose }: AuctionDetailsProps)
       if (!response.ok) {
         throw new Error('Failed to fetch bids');
       }
-      const bidData: Bid[] = await response.json(); // Define bidData properly
+      const bidData: Bid[] = await response.json(); 
       
-      // Sort bids by the highest amount to lowest
       const sortedBids = [...bidData].sort((a, b) => b.amount - a.amount);
       setBids(sortedBids);
 
       if (sortedBids.length > 0) {
-        const highestBid = sortedBids[0]; // Get the first bid after sorting
+        const highestBid = sortedBids[0]; 
         const userId = localStorage.getItem('UserId');
         if (userId && parseInt(userId, 10) === highestBid.userId) {
           setWinningStatus('Winning');
@@ -72,7 +72,6 @@ const AuctionDetails = ({ auction, currentPrice, onClose }: AuctionDetailsProps)
         }
       }
 
-      // Fetch user data for each bid
       const userIds = sortedBids.map((bid: Bid) => bid.userId);
       const usersData: { [key: number]: User } = {};
       for (const userId of userIds) {
@@ -90,10 +89,10 @@ const AuctionDetails = ({ auction, currentPrice, onClose }: AuctionDetailsProps)
 
   const getTimeRemainingString = () => {
     if (new Date() > new Date(auction.endTime)) {
-      return ''; // Auction is done, display nothing
+      return '';
     } else {
       const timeDiffMs = new Date(auction.endTime).getTime() - new Date().getTime();
-      const hoursRemaining = Math.floor(timeDiffMs / (1000 * 60 * 60)); // Convert milliseconds to hours
+      const hoursRemaining = Math.floor(timeDiffMs / (1000 * 60 * 60)); 
 
       if (hoursRemaining < 24) {
         return `${hoursRemaining}h`;
@@ -115,7 +114,7 @@ const AuctionDetails = ({ auction, currentPrice, onClose }: AuctionDetailsProps)
     const userId = localStorage.getItem('UserId') ?? "404";
     const datetime = new Date();
 
-    if (bidAmount <= updatedCurrentPrice) { // Use updatedCurrentPrice instead of currentPrice
+    if (bidAmount <= updatedCurrentPrice) { 
       setErrorMessage('Bid amount must be higher than the current price.');
       return;
     }
@@ -129,7 +128,7 @@ const AuctionDetails = ({ auction, currentPrice, onClose }: AuctionDetailsProps)
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          price: bidAmount // Update price with the new bid amount
+          price: bidAmount 
         })
       });
 
@@ -157,7 +156,6 @@ const AuctionDetails = ({ auction, currentPrice, onClose }: AuctionDetailsProps)
 
       console.log('Bid placed successfully');
 
-      // Update the current price state with the new bidAmount
       setUpdatedCurrentPrice(bidAmount);
       setBidAmount(bidAmount);
       fetchBids();
@@ -193,7 +191,7 @@ const AuctionDetails = ({ auction, currentPrice, onClose }: AuctionDetailsProps)
             <div className='placeBidContainer'>
               <p className='BidParagraph'>Bid: </p>
               <input type="number" className='BidAmountInput' value={bidAmount} onChange={(e) => setBidAmount(parseInt(e.target.value))} />
-              <button className='PlaceBidBtn' onClick={handlePlaceBid} disabled={bidAmount <= updatedCurrentPrice}>Place bid</button>
+              <button className='PlaceBidBtn' onClick={handlePlaceBid} disabled={ bidAmount <= updatedCurrentPrice}>Place bid</button>
             </div>
           </div>
           <div className="bids">

@@ -58,10 +58,10 @@ const BiddingAuctionItem = ({ auction }: { auction: Auction; }) => {
 
   const getTimeRemainingString = () => {
     if (new Date() > new Date(auction.endTime)) {
-      return ''; // Auction is done, display nothing
+      return ''; 
     } else {
       const timeDiffMs = new Date(auction.endTime).getTime() - new Date().getTime();
-      const hoursRemaining = Math.floor(timeDiffMs / (1000 * 60 * 60)); // Convert milliseconds to hours
+      const hoursRemaining = Math.floor(timeDiffMs / (1000 * 60 * 60)); 
 
       if (hoursRemaining < 24) {
         return `${hoursRemaining}h`;

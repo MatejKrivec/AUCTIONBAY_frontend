@@ -67,9 +67,7 @@ const ChangeProfilePicture: React.FC<ChangeProfilePicProps> = ({onClose}) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (profilePicture) {
-      // Save the current image value to local storage
       localStorage.setItem(imageKey, profilePicture);
-      console.log('Profile picture saved to local storage');
       handleCancel()
     } else {
       console.error('No profile picture to save');

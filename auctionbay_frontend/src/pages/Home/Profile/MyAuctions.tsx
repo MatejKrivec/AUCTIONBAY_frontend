@@ -22,12 +22,12 @@ interface Auction {
 const MyAuctions = () => {
   const [auctions, setAuctions] = useState<Auction[]>([]);
   const [addAuctionVisible, setAddAuctionVisible] = useState(false);
-  const [editAuctionVisible, setEditAuctionVisible] = useState(false); // State for edit auction visibility
-  const [editImageKey, setEditImageKey] = useState<string | null>(null); // State for storing image key of the auction being edited
-  const [editAuctionId, setEditAuctionId] = useState<number | null>(null); // State for storing the ID of the auction being edited
- /* const [editAuctionName, setEditAuctionName] = useState<string | null>(null);
+  const [editAuctionVisible, setEditAuctionVisible] = useState(false); 
+  const [editImageKey, setEditImageKey] = useState<string | null>(null); 
+  const [editAuctionId, setEditAuctionId] = useState<number | null>(null); 
+  const [editAuctionName, setEditAuctionName] = useState<string | null>(null);
   const [editAuctionDescription, setEditAuctionDescription] = useState<string  | null>(null);
-  const [editAuctionEndTime, setEditAuctionEndTime] = useState<string | null>(null);*/
+  const [editAuctionEndTime, setEditAuctionEndTime] = useState<string | null>(null);
 
 
   useEffect(() => {
@@ -66,6 +66,10 @@ const MyAuctions = () => {
     if (auctionToEdit) {
       setEditImageKey(auctionToEdit.image);
       setEditAuctionId(auctionId);
+
+      setEditAuctionName(auctionToEdit.name)
+      setEditAuctionDescription(auctionToEdit.description)
+      setEditAuctionEndTime(auctionToEdit.endTime.toISOString())
     }
   };
 
@@ -117,7 +121,15 @@ const MyAuctions = () => {
           <button className='addAuctionBtn' onClick={handleAddAuctionClick}><i className='fas fa-plus'></i></button>
         </div>
         {addAuctionVisible && (<AddAuction handleCancelAddClick={handleCancleAddClick}/>)}
-        {editAuctionVisible && (<EditAuction handleCancleEditClick={handleCancleEditClick} imageKey={editImageKey} auctionId={editAuctionId}/>)}
+        {editAuctionVisible && (
+        <EditAuction
+          handleCancleEditClick={handleCancleEditClick}
+          imageKey={editImageKey}
+          auctionId={editAuctionId}
+          auctionName={editAuctionName || ''} 
+          auctionDescription={editAuctionDescription || ''} 
+          auctionEndDate={editAuctionEndTime || ''} 
+        />)}
       </main>
     </div>
   );

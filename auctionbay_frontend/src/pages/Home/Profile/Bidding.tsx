@@ -29,17 +29,14 @@ const Bidding = () => {
         throw new Error('User ID not found in local storage');
       }
 
-      // Fetch bids associated with the user's ID
       const bidsResponse = await fetch(`http://localhost:3000/bids/byUserId/${userId}`);
       if (!bidsResponse.ok) {
         throw new Error('Failed to fetch bids');
       }
       const bidsData = await bidsResponse.json();
 
-      // Extract unique auction IDs from the bids
       const auctionIds: number[] = Array.from(new Set(bidsData.map((bid: any) => bid.auctionId)));
 
-      // Fetch auctions corresponding to the auction IDs
       const auctionsResponse = await Promise.all(
         auctionIds.map(async (auctionId: number) => {
           const auctionResponse = await fetch(`http://localhost:3000/auctions/one/${auctionId}`);
@@ -50,12 +47,10 @@ const Bidding = () => {
         })
       );
 
-      // Filter out auctions whose endTime has already passed
       const filteredAuctions = auctionsResponse.filter(auction => new Date(auction.endTime) > new Date());
 
       filteredAuctions.sort((a, b) => new Date(a.endTime).getTime() - new Date(b.endTime).getTime());
       
-      // Set the fetched auctions to state
       setBiddingAuctions(filteredAuctions);
     } catch (error) {
       console.error('Error fetching bidding auctions:', error);

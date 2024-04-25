@@ -42,32 +42,27 @@ function App() {
 
         <Route element={<RouteGuard  />}>
           <Route path="/me" element={<HomePage />} />
-        </Route> 
+          <Route path="/me/auction" element={<AddAuction handleCancelAddClick={function (): void {
+            throw new Error('Function not implemented.');
+          } } />} />
+       {/*<Route path="/me/auction/:id" element={
+            <EditAuction 
+              handleCancleEditClick={() => {  }}
+              imageKey={null} // or your actual image key
+              auctionId={null} // or your actual auction ID
+              auctionName=""
+              auctionDescription=""
+              auctionEndDate=""
+            />} 
+          /> */}   
+          <Route path="/me/update-password" element={< ChangePassword onClose={function (): void {
+            throw new Error('Function not implemented.');
+          } }/>} />
+        {/*<Route path="/auctions/:id/bid" element={<AuctionDetails auction={auction}  currentPrice={0} onClose={() => { /* handle close  */}  
+          <Route path='/auctions' element={<MainAuctions/>}></Route>
+        </Route>  
+
         
-
-      {
-      /*
-      <ProtectedRoute path="/me" component={HomePage} />
-      
-      <Route path='/me' element={<HomePage/>}></Route>
-
-        <Route path='/me/auction' element={<AddAuction handleCancelAddClick={function (): void {
-          throw new Error('Function not implemented.');
-        } }/>}></Route>
-
-        <Route path='/me/auction/:id' element={<EditAuction handleCancleEditClick={function (): void {
-          throw new Error('Function not implemented.');
-        } } imageKey={null} auctionId={null}/>}></Route>
-        
-        <Route path='/me/update-password' element={<ChangePassword onClose={function (): void {
-          throw new Error('Function not implemented.');
-        } }/>}></Route>
-*/}  
-      {/* <Route path='/auctions/:id/bid' element={<AuctionDetails auction={undefined} currentPrice={0} onClose={function (): void {
-          throw new Error('Function not implemented.');
-        } }/>}></Route>*/}  
-
-        <Route path='/auctions' element={<MainAuctions/>}></Route>
       </Routes>
     </Router>
   );

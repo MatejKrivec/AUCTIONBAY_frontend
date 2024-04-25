@@ -12,11 +12,11 @@ const HomePage= () => {
     const [IsLogOutVisible,setIsLogOutVisible] = useState(false)
     const [username, setUsername] = useState('');
     const [userData, setUserData] = useState('.\src\assets\images\UserError.png');
-    //const [userData, setUserData] = useState('.\src\assets\images\UserError.png');
 
     useEffect(() => {
         SetUserData();
-    }, []); // Include SetUserData in the dependency array to prevent potential bugs
+
+    }, ); 
 
     const SetUserData = async () => {
         const token = localStorage.getItem('token');
@@ -45,11 +45,10 @@ const HomePage= () => {
             const userId = userData.id;
             const UserName = userData.username;
 
-            setUsername(UserName); // Set the username state
+            setUsername(UserName); 
     
             localStorage.setItem('UserId', userId);
 
-            // Fetch user data including profile picture
             const userResponse = await fetch(`http://localhost:3000/users/${userId}`);
             if (!userResponse.ok) {
                 throw new Error('Failed to fetch user data');
@@ -57,6 +56,9 @@ const HomePage= () => {
 
             const userDataWithProfilePic = await userResponse.json();
             setUserData(userDataWithProfilePic.profilePicture);
+
+         
+            
         } catch (error) {
             console.error('Error setting user data:', error);
         }
@@ -69,8 +71,9 @@ const HomePage= () => {
 
     const renderContent = () => {
         if (activeTab === 'profile') {
+      
             return (
-                <MainProfile username={username}/>
+                <MainProfile username={username} />
             );
         } else if (activeTab === 'auctions') {
             return (
@@ -79,11 +82,12 @@ const HomePage= () => {
         }
     };
 
-    const handleSettingsClick = () => {
+    const handleSettingsClick = async () => {
       setIsLogOutVisible(!IsLogOutVisible)
+       
     }
 
-    const handleSettingsClose= () => {
+    const handleSettingsClose= async () => {
         setIsLogOutVisible(!IsLogOutVisible)
     }
 
