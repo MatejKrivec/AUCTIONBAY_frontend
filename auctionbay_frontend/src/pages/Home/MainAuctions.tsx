@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import '../../assets/css/MainAuctions.css';
 import AuctionDetails from './Auctions/AuctionDetails'; 
 import AuctionItem from './Auctions/AuctionItem';

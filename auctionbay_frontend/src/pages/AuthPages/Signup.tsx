@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link} from 'react-router-dom';
 import '../../assets/css/AuthPages.css';
 import DefaultProfilePic from '../../assets/images/DefaultProfilePic.png'

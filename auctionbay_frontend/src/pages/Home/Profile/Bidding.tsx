@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import '../../../assets/css/Bidding.css';
 import BiddingAuctionItem from '../Auctions/BiddingAuctionItem';
-import AuctionItem from '../Auctions/AuctionItem';
+
 
 interface Auction {
   auctionId: number;

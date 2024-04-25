@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import '../../../assets/css/MyAuctions.css';
 import AddAuction from '../Auctions/AddAuction';
 import EditAuction from '../Auctions/EditAuction';
 import MyAuctionItem from '../Auctions/MyAuctionItem';
-import jwt, { JwtPayload } from 'jsonwebtoken';
+
 
 interface Auction {
   userId: number;

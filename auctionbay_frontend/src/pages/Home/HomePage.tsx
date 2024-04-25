@@ -10,7 +10,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 const HomePage= () => {
     const [activeTab, setActiveTab] = useState('profile');
     const [IsLogOutVisible,setIsLogOutVisible] = useState(false)
-    const [username, setUsername] = useState('');
+  
     const [userData, setUserData] = useState('.\src\assets\images\UserError.png');
 
     useEffect(() => {
@@ -41,13 +41,9 @@ const HomePage= () => {
             }
             
             const userData = await response.json();
-    
             const userId = userData.id;
-            const UserName = userData.username;
-
-            setUsername(UserName); 
-    
             localStorage.setItem('UserId', userId);
+
 
             const userResponse = await fetch(`http://localhost:3000/users/${userId}`);
             if (!userResponse.ok) {
@@ -73,7 +69,7 @@ const HomePage= () => {
         if (activeTab === 'profile') {
       
             return (
-                <MainProfile username={username} />
+                <MainProfile  />
             );
         } else if (activeTab === 'auctions') {
             return (
@@ -87,8 +83,9 @@ const HomePage= () => {
        
     }
 
-    const handleSettingsClose= async () => {
+    const handleSettingsClose = async () => {
         setIsLogOutVisible(!IsLogOutVisible)
+        
     }
 
     const getImageFromLocalStorage = (key: string) => {

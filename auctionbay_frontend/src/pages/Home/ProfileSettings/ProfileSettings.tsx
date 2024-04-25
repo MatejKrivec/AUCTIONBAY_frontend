@@ -50,6 +50,8 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({onClose}) => {
         email: userData.email, 
       };
 
+
+
       const response = await fetch(`http://localhost:3000/users/posodobitev/${userId}`, {
         method: 'PATCH',
         headers: {
@@ -60,6 +62,9 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({onClose}) => {
       if (!response.ok) {
         throw new Error('Failed to update user details');
       }
+
+      localStorage.setItem('USERNAME', username);
+
       
       handleCancel();
     } catch (error: any) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import '../../assets/css/MainProfile.css';
 import MyAuctions from './Profile/MyAuctions';
 import Bidding from './Profile/Bidding';
@@ -6,14 +6,45 @@ import Won from './Profile/Won';
 
 
 
-const MainProfile = ({ username }: { username: string }) => {
+const MainProfile = () => {
     const [selectedOption, setSelectedOption] = useState('option1');
+    const [ime, setIme] = useState('');
+   
+    useEffect(() => {
+      SetUserData();
+
+  }, ); 
+
+  const SetUserData = async () => {
+      const id = localStorage.getItem('UserId');
+      
+      try {
+          const response = await fetch(`http://localhost:3000/users/${id}`, {
+              method: 'GET',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+          });
+          
+          if (!response.ok) {
+              throw new Error('error');
+          }
+
+          const userData = await response.json();
+          setIme(userData.username)
+          
+        
+          
+      } catch (error) {
+          console.error('Error fetching username:', error);
+      }
+  }; 
 
     const handleChange = (option: React.SetStateAction<string>) => {
       setSelectedOption(option);
     };
 
-
+    //const ime = localStorage.getItem('USERNAME')
   
     const renderContent = () => {
       switch (selectedOption) {
@@ -32,7 +63,7 @@ const MainProfile = ({ username }: { username: string }) => {
       <div>
         <main className='main'>
           <div className='HelloUserTextContainer'>
-            <h1 className='HelloUserTitle'>Hello {username}!</h1>
+            <h1 className='HelloUserTitle'>Hello {ime}!</h1>
           </div>
           <div className='OptionBtns'>
             <div className='ContentOptions'>

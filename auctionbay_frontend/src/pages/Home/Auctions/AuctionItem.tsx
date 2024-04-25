@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 
 interface Auction {
   auctionId: number;
@@ -20,7 +20,7 @@ interface Bid {
 
 const AuctionItem = ({ auction, onClick }: { auction: Auction; onClick: () => void }) => {
   const [winningStatus, setWinningStatus] = useState<string>('');
-  const [highestBidderId, setHighestBidderId] = useState<number | null>(null);
+ // const [highestBidderId, setHighestBidderId] = useState<number | null>(null);
 
   useEffect(() => {
     fetchBids();
@@ -35,7 +35,7 @@ const AuctionItem = ({ auction, onClick }: { auction: Auction; onClick: () => vo
       const bidData: Bid[] = await response.json();
       if (bidData.length > 0) {
         const highestBid = bidData.reduce((prev, current) => (prev.amount > current.amount ? prev : current));
-        setHighestBidderId(highestBid.userId);
+        //setHighestBidderId(highestBid.userId);
         const userId = localStorage.getItem('UserId');
         if (userId && parseInt(userId, 10) === highestBid.userId) {
           setWinningStatus('Winning');

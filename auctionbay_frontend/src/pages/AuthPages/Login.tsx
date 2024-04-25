@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; 
 import '../../assets/css/AuthPages.css';
-import { Navigate } from 'react-router-dom';
-import HomePage from '../Home/HomePage';
+
 
 const Login = () => {
   const [formData, setFormData] = useState({

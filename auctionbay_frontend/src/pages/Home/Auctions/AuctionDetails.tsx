@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import '../../../assets/css/AuctionDetails.css';
-import { useNavigate } from 'react-router-dom';
 
 interface Auction {
   auctionId: number;
@@ -37,12 +36,12 @@ const AuctionDetails = ({ auction, currentPrice, onClose }: AuctionDetailsProps)
   const [bidAmount, setBidAmount] = useState<number>(0);
   const [bids, setBids] = useState<Bid[]>([]);
   const [users, setUsers] = useState<{ [key: number]: User }>({});
-  const [errorMessage, setErrorMessage] = useState<string>('');
+
   const [winningStatus, setWinningStatus] = useState<string>('');
 
   const [updatedCurrentPrice, setUpdatedCurrentPrice] = useState<number>(currentPrice);
 
-  const navigate = useNavigate();
+
 
   useEffect(() => {
    // if(!auction) return ;
@@ -115,11 +114,11 @@ const AuctionDetails = ({ auction, currentPrice, onClose }: AuctionDetailsProps)
     const datetime = new Date();
 
     if (bidAmount <= updatedCurrentPrice) { 
-      setErrorMessage('Bid amount must be higher than the current price.');
+      
       return;
     }
 
-    setErrorMessage('');
+   
 
     try {
       const patchResponse = await fetch(`http://localhost:3000/auctions/${auction.auctionId}`, {
