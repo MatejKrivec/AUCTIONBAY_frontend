@@ -1,6 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 //import './assets/InitPage.css';
 import '../assets/css/InitPage.css';
+import logo from '../assets/images/AU_logo.png'; 
+import presentation from '../assets/images/presentacija.png'; 
+
 
 const InitPage = () => {
 
@@ -17,7 +20,7 @@ const InitPage = () => {
     <div className="introPage">
       <header className="header">
         <div className="logoContainer">
-          <img src="src\assets\images\AU_logo.png" alt="Logo" className="logo" />
+          <img src={logo} alt="Logo" className="logo" />
         </div>
         <div className="authOptions">
           <button className="loginButton" onClick={LoginBtnClick}>Login</button>
@@ -30,7 +33,7 @@ const InitPage = () => {
         <p>This is some text explaining your app, its features, and how it makes e-auctions easy for everyone.</p>
         <button className="startBiddingButton">Start Bidding</button>
         <div className='visual'>
-          <img src="src\assets\images\presentacija.png" alt="Visual Representation" className="visualRepresentation" />
+          <img src={presentation} alt="Visual Representation" className="visualRepresentation" />
         </div>
       </main>
       <footer className="footer">

@@ -1,4 +1,5 @@
 import  { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 interface Auction {
   auctionId: number;
@@ -43,8 +44,8 @@ const AuctionItem = ({ auction, onClick }: { auction: Auction; onClick: () => vo
           setWinningStatus('');
         }
       }
-    } catch (error) {
-      console.error('Error fetching bids:', error);
+    } catch (error: any) {
+      toast.error(`Error fetching bids: ${error.message}`);
     }
   };
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../../../assets/css/AuctionDetails.css';
+import { toast } from 'react-toastify';
 
 interface Auction {
   auctionId: number;
@@ -15,7 +16,7 @@ interface Auction {
 
 interface AuctionDetailsProps {
   auction: Auction;
-  currentPrice: number; // Add current price prop
+  currentPrice: number; 
   onClose: () => void;
 }
 
@@ -81,8 +82,8 @@ const AuctionDetails = ({ auction, currentPrice, onClose }: AuctionDetailsProps)
         }
       }
       setUsers(usersData);
-    } catch (error) {
-      console.error('Error fetching bids:', error);
+    } catch (error: any) {
+      toast.error(`Error fetching bids: ${error.message}`);
     }
   };
 
@@ -153,13 +154,12 @@ const AuctionDetails = ({ auction, currentPrice, onClose }: AuctionDetailsProps)
         throw new Error('Failed to place bid');
       }
 
-      console.log('Bid placed successfully');
 
       setUpdatedCurrentPrice(bidAmount);
       setBidAmount(bidAmount);
       fetchBids();
-    } catch (error) {
-      console.error('Error placing bid:', error);
+    } catch (error: any) {
+      toast.error(`Error placing bid: ${error.message}`);
     }
   };
 

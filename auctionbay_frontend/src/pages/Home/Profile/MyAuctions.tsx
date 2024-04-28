@@ -3,6 +3,7 @@ import '../../../assets/css/MyAuctions.css';
 import AddAuction from '../Auctions/AddAuction';
 import EditAuction from '../Auctions/EditAuction';
 import MyAuctionItem from '../Auctions/MyAuctionItem';
+import { toast } from 'react-toastify';
 
 
 interface Auction {
@@ -51,8 +52,9 @@ const MyAuctions = () => {
       setAuctions(auctionsArray);
 
 
-    } catch (error) {
-      console.error('Error fetching data:', error);
+    } catch (error: any) {
+      console.log(error)
+     // toast.error(`Error fetching dataaa: ${error.message}`);  ///////
     }
   };
 
@@ -101,8 +103,8 @@ const MyAuctions = () => {
 
      // window.location.reload();
 
-    } catch (error) {
-      console.error('Error deleting auction:', error);
+    } catch (error: any) {
+      toast.error(`Error deleting auction: ${error.message}`);
     }
   };
 

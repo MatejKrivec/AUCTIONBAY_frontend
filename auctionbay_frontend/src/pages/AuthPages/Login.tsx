@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; 
 import '../../assets/css/AuthPages.css';
-
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
+import presentation2 from '../../assets/images/presentacija2.png'; 
+import logo from '../../assets/images/logo.png'; 
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -36,13 +40,9 @@ const Login = () => {
         throw new Error('Failed to log in');
       }
   
-      // Assume the server responds with a JWT token
       const { token } = await response.json();
-  
-      // Store the token in local storage
       localStorage.setItem('token', token);
 
-      //console.log('Stored token:', token);
       try {
         const response = await fetch('http://localhost:3000/auth/protected', {
           method: 'GET',
@@ -50,34 +50,34 @@ const Login = () => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}` 
           }
-          
-        });;
+        });
         if (!response.ok) {
-          throw new Error('Failed to authenticate'); 
+          throw new Error('Wrong username or password'); 
         }
       
-        // If the request is successful, navigate to the /me route
-        //navigate('/me');
         const responseData = await response.json();
         navigate('/'+responseData.route); 
       
       } catch (error) {
         console.error('Error authenticating:', error);
+
+        toast.error((error as Error).message);
       }
   
     } catch (error) {
       console.error('Error logging in:', error);
+      toast.error((error as Error).message);
     }
   };
 
   return (
     <div className="flex-container">
       <div className='visualContainer'>
-        <img src='src\assets\images\presentacija2.png' alt='presentacija' className='presentacija'/>
+        <img src={presentation2} alt='presentacija' className='presentacija'/>
       </div>
       <div className='form'>
         <div className='logoPic'>
-          <img src="src\assets\images\logo.png" alt="Logo" className="logo" />
+          <img src={logo} alt="Logo" className="logo" />
         </div>
         <h1 className="auctionText">Welcome back!</h1>
         <p className='LoginText'>Please enter your details.</p>
@@ -89,11 +89,13 @@ const Login = () => {
           <div className="form-group">
             <label htmlFor="password" className="label">Password</label>
             <input type="password" className="form-control" id="password" name="password" placeholder='password' onChange={handleChange} required></input>
-
           </div>
           <Link className="link" to="/forgot-password">Forgot password?</Link>
           <button type="submit" className="btn btn-primary">Login</button>
+          <ToastContainer />
         </form>
+
+        
         <p className='paragraph'>Don't have an account? <Link className='LoginToSignupLink' to="/signup">Sign up</Link></p>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../../../assets/css/EditProfile.css';
+import { toast } from 'react-toastify'; 
 
 interface ChangeProfilePicProps {
   onClose:  () => void;
@@ -31,10 +32,10 @@ const ChangeProfilePicture: React.FC<ChangeProfilePicProps> = ({onClose}) => {
        if (profilePic) {
           setProfilePicture(profilePic);
         } else {
-          console.error('Profile picture not found in local storage');
+          toast.error('Profile picture not found in local storage');
         }
-    } catch (error) {
-      console.error('Error fetching profile picture:', error);
+    } catch (error: any) {
+      toast.error(`Error fetching profile picture: ${error.message}`);
     }
   }
 
@@ -60,7 +61,7 @@ const ChangeProfilePicture: React.FC<ChangeProfilePicProps> = ({onClose}) => {
         reader.readAsDataURL(file);
       }
     } catch (error) {
-      console.error('Error uploading profile picture:', error);
+      toast.error(`Error uploading profile picture: ${(error as Error).message}`);
     }
   };
 
@@ -70,7 +71,7 @@ const ChangeProfilePicture: React.FC<ChangeProfilePicProps> = ({onClose}) => {
       localStorage.setItem(imageKey, profilePicture);
       handleCancel()
     } else {
-      console.error('No profile picture to save');
+      toast.error('No profile picture to save');
     }
   };
 

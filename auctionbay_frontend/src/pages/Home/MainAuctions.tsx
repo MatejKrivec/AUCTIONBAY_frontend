@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import '../../assets/css/MainAuctions.css';
 import AuctionDetails from './Auctions/AuctionDetails'; 
 import AuctionItem from './Auctions/AuctionItem';
+import { toast } from 'react-toastify'; // Import toast
 
 
 interface Auction {
@@ -59,8 +60,9 @@ const MainAuctions = () => {
       setAuctions(filteredAuctions);
 
 
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching data:', error);
+      toast.error(`Error fetching data: ${error.message}`);
     }
   };
 

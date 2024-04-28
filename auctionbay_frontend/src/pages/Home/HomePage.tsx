@@ -4,6 +4,10 @@ import MainProfile from './MainProfile';
 import MainAuctions from './MainAuctions';
 import LogOut from './ProfileSettings/LogOut';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
+import roundedLogo from '../../assets/images/roundedLogo.png'; 
+
 
 
 
@@ -56,7 +60,7 @@ const HomePage= () => {
          
             
         } catch (error) {
-            console.error('Error setting user data:', error);
+            toast.error((error as Error).message);
         }
     }; 
 
@@ -100,7 +104,7 @@ const HomePage= () => {
             <header>
                 <div className='navigacija'>
                     <div className='logoContainer'>
-                        <img src='.\src\assets\images\roundedLogo.png' alt="Logo" className="logo"></img>
+                        <img src={roundedLogo} alt="Logo" className="logo"></img>
                     </div>
                     <div className='NavButtons'>
                         <button onClick={() => handleTabChange('auctions')} className={activeTab === 'auctions' ? 'active' : ''}>
@@ -121,6 +125,7 @@ const HomePage= () => {
             {renderContent()}
             
             {IsLogOutVisible && (<LogOut handleProfileSettingsClosee={handleSettingsClose}/>)}
+            <ToastContainer />
           {/*<footer className="footer">
                 <p>@Matej-Krivec-Skill-Up-Mentor</p>
             </footer>*/}  

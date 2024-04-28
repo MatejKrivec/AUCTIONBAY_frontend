@@ -5,7 +5,7 @@ import Signup from './pages/AuthPages/Signup';
 import Login from './pages/AuthPages/Login';
 import ResetPassword from './pages/AuthPages/ResetPassword';
 
-import InitPage from './components/InitPage';
+import InitPage from './pages/InitPage';
 import HomePage from './pages/Home/HomePage';
 import MainAuctions from './pages/Home/MainAuctions';
 

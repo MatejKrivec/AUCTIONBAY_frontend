@@ -3,6 +3,7 @@ import '../../assets/css/MainProfile.css';
 import MyAuctions from './Profile/MyAuctions';
 import Bidding from './Profile/Bidding';
 import Won from './Profile/Won';
+import '@fortawesome/fontawesome-free/css/all.min.css';; 
 
 
 
@@ -35,8 +36,9 @@ const MainProfile = () => {
           
         
           
-      } catch (error) {
+      } catch (error: any) {
           console.error('Error fetching username:', error);
+         // toast.error(error.message);
       }
   }; 
 

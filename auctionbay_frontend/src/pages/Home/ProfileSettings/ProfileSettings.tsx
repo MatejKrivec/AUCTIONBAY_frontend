@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../../../assets/css/EditProfile.css';
 import ChangePassword from './ChangePassword';
 import ChangeProfilePicture from './ChangeProfilePicture';
+import { toast } from 'react-toastify'; 
 
 
 interface ProfileSettingsProps {
@@ -68,7 +69,7 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({onClose}) => {
       
       handleCancel();
     } catch (error: any) {
-      console.error('Error updating user details:', error.message);
+      toast.error(`Error updating user details: ${error.message}`);
     }
   };
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../../assets/css/AddAuction.css';
+import { toast } from 'react-toastify';
 
 const AddAuction = ({ handleCancelAddClick }: { handleCancelAddClick: () => void }) => {
   const [imageUploaded, setImageUploaded] = useState(false);
@@ -96,8 +97,8 @@ const AddAuction = ({ handleCancelAddClick }: { handleCancelAddClick: () => void
       }); 
 
       handleCancelAddClick();
-    } catch (error) {
-      console.error('Error creating auction:', error);
+    } catch (error: any) {
+      toast.error(`Error creating auction: ${error.message}`);
     }
   };
 

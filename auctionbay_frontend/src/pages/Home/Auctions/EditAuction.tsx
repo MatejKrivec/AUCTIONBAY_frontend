@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../../../assets/css/EditAuction.css';
+import { toast } from 'react-toastify';
 
 const EditAuction = ({
     handleCancleEditClick,
@@ -104,8 +105,8 @@ const EditAuction = ({
             handleCancleEditClick()
 
 
-        } catch (error) {
-            console.error('Error editing auction:', error);
+        } catch (error: any) {
+            toast.error(`Error editing auction: ${error.message}`);
         }
     }
 

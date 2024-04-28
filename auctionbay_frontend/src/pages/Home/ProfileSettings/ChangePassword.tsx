@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import '../../../assets/css/EditProfile.css';
+import { toast } from 'react-toastify'; 
 
 interface ChangePasswordProps {
   onClose: () => void;
@@ -27,7 +28,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({onClose}) => {
 
       console.log(formData)
       if (formData.newPassword !== formData.confirmPassword) {
-        console.log('error paswords dont match')
+        toast.error('Passwords do not match');
       }
       else{
         const userId = localStorage.getItem('UserId');
@@ -44,10 +45,10 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({onClose}) => {
       });
 
       const isPasswordValid = await response.text(); 
-      console.log("Password validation response: " + isPasswordValid);
+     // console.log("Password validation response: " + isPasswordValid);
 
       if (isPasswordValid === 'false') {
-        console.log('Invalid current password')
+        toast.error('Invalid current password');
         return;
       }
 
@@ -75,7 +76,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({onClose}) => {
 
       
     } catch (error: any) {
-      console.error('Error updating password:', error.message);
+      toast.error(`Error updating password: ${error.message}`);
     }
   };
 

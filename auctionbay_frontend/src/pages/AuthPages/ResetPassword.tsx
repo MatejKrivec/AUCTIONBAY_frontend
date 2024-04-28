@@ -1,15 +1,17 @@
 import { Link } from 'react-router-dom';
 import '../../assets/css/AuthPages.css';
+import presentation2 from '../../assets/images/presentacija2.png'; 
+import logo from '../../assets/images/logo.png'; 
 
 const ResetPassword = () => {
   return (
     <div className="flex-container">
         <div className='visualContainer'>
-          <img src='src\assets\images\presentacija2.png' alt='presentacija' className='presentacija'/>
+          <img src={presentation2} alt='presentacija' className='presentacija'/>
         </div>
         <div className='form'>
           <div className='logoPic'>
-            <img src="src\assets\images\logo.png" alt="Logo" className="logo" />
+            <img src={logo} alt="Logo" className="logo" />
           </div>
           <h1 className="auctionText">Forgot password!</h1>
           <p className='ResetPasswordText'>No worries we will send you reset instructions.</p>

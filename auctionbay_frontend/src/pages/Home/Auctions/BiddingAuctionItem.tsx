@@ -1,5 +1,6 @@
 import  { useEffect, useState } from 'react';
 import '../../../assets/css/Bidding.css';
+import { toast } from 'react-toastify';
 
 interface Auction {
   auctionId: number;
@@ -29,7 +30,7 @@ const BiddingAuctionItem = ({ auction }: { auction: Auction; }) => {
   const fetchBids = async () => {
     try {
       if (!auction.auctionId) {
-        console.error('Auction ID is missing or invalid');
+        toast.error('Auction ID is missing or invalid');
         return;
       }
 
@@ -47,8 +48,8 @@ const BiddingAuctionItem = ({ auction }: { auction: Auction; }) => {
           setWinningStatus('Outbid');
         }
       }
-    } catch (error) {
-      console.error('Error fetching bids:', error);
+    } catch (error: any) {
+      toast.error(`Error fetching bids: ${error.message}`);
     }
   };
 

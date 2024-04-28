@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import '../../../assets/css/Won.css';
 import WonAuctionItem from '../Auctions/WonAuctionItem';
+import { toast } from 'react-toastify';
 
 interface Auction {
   auctionId: number;
@@ -83,8 +84,8 @@ const Won = () => {
       const wonAuctions: Auction[] = filteredWonAuctions.filter((auction: Auction | null): auction is Auction => auction !== null);
 
       setAuctions(wonAuctions);
-    } catch (error) {
-      console.error('Error fetching bidding auctions:', error);
+    } catch (error: any) {
+      toast.error(`Error fetching bidding auctions: ${error.message}`);
     }
   };
 

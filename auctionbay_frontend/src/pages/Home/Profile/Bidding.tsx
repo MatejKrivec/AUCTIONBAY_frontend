@@ -1,6 +1,7 @@
 import  { useState, useEffect } from 'react';
 import '../../../assets/css/Bidding.css';
 import BiddingAuctionItem from '../Auctions/BiddingAuctionItem';
+import { toast } from 'react-toastify';
 
 
 interface Auction {
@@ -52,8 +53,8 @@ const Bidding = () => {
       filteredAuctions.sort((a, b) => new Date(a.endTime).getTime() - new Date(b.endTime).getTime());
       
       setBiddingAuctions(filteredAuctions);
-    } catch (error) {
-      console.error('Error fetching bidding auctions:', error);
+    } catch (error: any) {
+      toast.error(`Error fetching bidding auctions: ${error.message}`);
     }
   };
 

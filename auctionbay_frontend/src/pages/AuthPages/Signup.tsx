@@ -1,7 +1,11 @@
 import { useState } from 'react';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../../assets/css/AuthPages.css';
-import DefaultProfilePic from '../../assets/images/DefaultProfilePic.png'
+import DefaultProfilePic from '../../assets/images/DefaultProfilePic.png';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import presentation2 from '../../assets/images/presentacija2.png'; 
+import logo from '../../assets/images/logo.png'; 
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -31,7 +35,6 @@ const Signup = () => {
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
-    // Validation
     let hasError = false;
     const newErrors = { ...errors };
 
@@ -119,21 +122,23 @@ const Signup = () => {
   
     } catch (error) {
       console.error('Error creating user:', error);
+      toast.error((error instanceof Error) ? error.message : 'Error creating user');
     }
   };
 
   return (
     <div className="flex-container">
       <div className='visualContainer'>
-        <img src='src\assets\images\presentacija2.png' alt='presentacija' className='presentacija'/>
+        <img src={presentation2} alt='presentacija' className='presentacija'/>
       </div>
       <div className='form'>
         <div className='logoPicSignup'>
-          <img src="src\assets\images\logo.png" alt="LogoSignup" className="logo" />
+          <img src={logo} alt="LogoSignup" className="logo" />
         </div>
         <h1 className="auctionText">Hello!</h1>
         <p className='SigninText'>Please enter your details.</p>
         <form className='SigninForm' onSubmit={handleSubmit}>
+        <ToastContainer />
           <div className="form-row">
             <div className="form-group">
               <label htmlFor="username" className="label">Name</label>
