@@ -8,7 +8,7 @@
 
 ###
 
-<p align="left">AuctionBay is a dynamic full-stack auction web application designed to facilitate the creation and management of auction events. Users can easily create and participate in auctions, with a seamless bidding process and comprehensive event management features.</p>
+<p align="left">AuctionBay is a dynamic full-stack auction web application designed to facilitate the creation and management of auction events. Users can easily create and participate in auctions, with a seamless bidding process and comprehensive event management features. Registered users can initiate auctions by uploading images and providing details such as event titles, descriptions, starting prices, and auction durations. The highest bid at the auction's end wins the item. Sellers can oversee their auction events and view bid histories.</p>
 
 ###
 
